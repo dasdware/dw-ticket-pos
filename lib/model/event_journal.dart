@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/model/event_journal_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -9,8 +10,13 @@ class EventJournal extends Model {
   final DateTime dateTime;
   final List<Ticket> availableTickets;
   final List<EventJournalEntry> entries = [];
+  EventJournalSummary _summary;
 
-  EventJournal(this.name, this.dateTime, this.availableTickets);
+  EventJournal(this.name, this.dateTime, this.availableTickets) {
+    _summary = EventJournalSummary(this);
+  }
+
+  EventJournalSummary get summary => _summary;
 
   EventJournalEntry addEntry() {
     return EventJournalEntry(this);

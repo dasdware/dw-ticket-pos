@@ -17,6 +17,12 @@ class EventJournalEntry extends Model {
 
   List<TicketJournalEntry> get ticketEntries => _ticketEntries;
 
+  int get count {
+    return ticketEntries.fold(
+        0, (int value, ticketEntry) => value + ticketEntry.count);
+  }
+
+
   int get price {
     return ticketEntries.fold(
         0, (int value, ticketEntry) => value + ticketEntry.price);
