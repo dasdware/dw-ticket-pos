@@ -36,7 +36,7 @@ class EventJournalView extends StatelessWidget {
             children: [
               // EventJournalEntryWidget(eventJournal.addEntry(), null),
               Icon(Icons.assessment),
-              new EventJournalEntriesList(),
+              new EventJournalEntriesListWidget(),
             ],
           ),
           floatingActionButton: FloatingActionButton(
