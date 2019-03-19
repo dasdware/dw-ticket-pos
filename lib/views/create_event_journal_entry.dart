@@ -1,11 +1,11 @@
+import 'package:dw_ticket_pos/model/event_entry.dart';
+import 'package:dw_ticket_pos/model/journal_event_entry.dart';
+import 'package:dw_ticket_pos/widgets/event_entry_price.dart';
+import 'package:dw_ticket_pos/widgets/ticket_entries.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:dw_ticket_pos/model/event_journal_entry.dart';
 import 'package:dw_ticket_pos/model/event_journal.dart';
-
-import 'package:dw_ticket_pos/widgets/event_journal_entry_price.dart';
-import 'package:dw_ticket_pos/widgets/ticket_journal_entries.dart';
 
 class CreateEventJournalEntryView extends StatefulWidget {
   final EventJournal eventJournal;
@@ -19,7 +19,7 @@ class CreateEventJournalEntryView extends StatefulWidget {
 
 class _CreateEventJournalEntryViewState
     extends State<CreateEventJournalEntryView> {
-  EventJournalEntry _entry;
+  JournalEventEntry _entry;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _CreateEventJournalEntryViewState
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<EventJournalEntry>(
+    return ScopedModel<EventEntry>(
       model: _entry,
       child: Scaffold(
         appBar: AppBar(
@@ -48,8 +48,8 @@ class _CreateEventJournalEntryViewState
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new EventJournalEntryPriceWidget(),
-            new TicketJournalEntriesWidget(),
+            new EventEntryPriceWidget(),
+            new TicketEntriesWidget(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -61,3 +61,4 @@ class _CreateEventJournalEntryViewState
     );
   }
 }
+

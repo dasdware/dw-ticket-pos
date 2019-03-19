@@ -1,11 +1,11 @@
+import 'package:dw_ticket_pos/model/journal_ticket_entry.dart';
+import 'package:dw_ticket_pos/model/ticket_entry.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dw_ticket_pos/model/ticket_journal_entry.dart';
-
-class TicketEntryManipulationButtonWidget extends StatelessWidget {
+class TicketEntryButtonWidget extends StatelessWidget {
   final int amount;
 
-  const TicketEntryManipulationButtonWidget({Key key, this.amount})
+  const TicketEntryButtonWidget({Key key, this.amount})
       : super(key: key);
 
   String get caption {
@@ -26,7 +26,7 @@ class TicketEntryManipulationButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TicketJournalEntry entry = TicketJournalEntry.of(context);
+    final TicketEntry entry = TicketEntry.of(context);
     return Padding(
       padding: EdgeInsets.only(left: 1, right: 1),
       child: Material(
@@ -44,7 +44,10 @@ class TicketEntryManipulationButtonWidget extends StatelessWidget {
             ),
           ),
           onTap: () {
-            entry.updateCount(amount);
+            // TODO: This is a bit hacky
+            if (entry is JournalTicketEntry) {
+              entry.updateCount(amount);
+            }
           },
         ),
       ),
