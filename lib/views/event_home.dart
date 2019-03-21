@@ -1,17 +1,15 @@
-import 'package:dw_ticket_pos/widgets/event_journal_entries_list.dart';
-import 'package:dw_ticket_pos/widgets/event_journal_entries_overview.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dw_ticket_pos/views/create_event_journal_entry.dart';
+import 'package:dw_ticket_pos/model/event.dart';
+import 'package:dw_ticket_pos/utils/format.dart';
+import 'package:dw_ticket_pos/views/event_create_booking.dart';
+import 'package:dw_ticket_pos/widgets/bookings_list.dart';
+import 'package:dw_ticket_pos/widgets/bookings_summary.dart';
 
-import '../model/event_journal.dart';
-// import '../widgets/event_journal_entry.dart';
-import '../utils/format.dart';
-
-class EventJournalView extends StatelessWidget {
+class EventHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final EventJournal eventJournal = EventJournal.of(context);
+    final Event event = Event.of(context);
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -20,8 +18,8 @@ class EventJournalView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(eventJournal.name),
-                    Text(formatDate(eventJournal.dateTime),
+                    Text(event.name),
+                    Text(formatDate(event.dateTime),
                         style: TextStyle(
                             fontWeight: FontWeight.normal, fontSize: 14)),
                   ]),
@@ -34,8 +32,8 @@ class EventJournalView extends StatelessWidget {
           body: TabBarView(
             children: [
               // EventJournalEntryWidget(eventJournal.addEntry(), null),
-              new EventJournalEntriesOverviewWidget(),
-              new EventJournalEntriesListWidget(),
+              new BookingsSummaryWidget(),
+              new BookingsListWidget(),
             ],
           ),
           floatingActionButton: FloatingActionButton(
@@ -44,7 +42,7 @@ class EventJournalView extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          CreateEventJournalEntryView(eventJournal)));
+                          EventCreateBookingView(event)));
             },
             tooltip: 'Neue Buchung',
             child: Icon(Icons.add),

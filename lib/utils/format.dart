@@ -1,6 +1,6 @@
-// import 'package:intl/date_symbol_data_file.dart';
-import 'package:dw_ticket_pos/model/journal_event_entry.dart';
 import 'package:intl/intl.dart';
+
+import 'package:dw_ticket_pos/model/ticket_entries.dart';
 
 String formatPrice(int price) {
   return (price ~/ 100).toString() +
@@ -25,8 +25,8 @@ String formatDateTime(DateTime date) {
   return _dateTimeFormat.format(date);
 }
 
-String formatTicketEntries(JournalEventEntry entry) {
-  String value = entry.entries.fold('', (combined, ticketEntry) {
+String formatTicketEntries(TicketEntries ticketEntries) {
+  String value = ticketEntries.entries.fold('', (combined, ticketEntry) {
     if (ticketEntry.count > 0) {
       if (combined.isNotEmpty) {
         combined += ', ';

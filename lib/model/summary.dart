@@ -1,22 +1,22 @@
-import 'package:dw_ticket_pos/model/event_entry.dart';
-import 'package:dw_ticket_pos/model/event_journal.dart';
-import 'package:dw_ticket_pos/model/summary_ticket_entry.dart';
+import 'package:dw_ticket_pos/model/ticket_entries.dart';
+import 'package:dw_ticket_pos/model/event.dart';
+import 'package:dw_ticket_pos/model/summary_ticket.dart';
 
-class Summary extends EventEntry {
-  final EventJournal _journal;
-  List<SummaryTicketEntry> _entries;
+class Summary extends TicketEntries {
+  final Event _journal;
+  List<SummaryTicket> _entries;
 
   Summary(this._journal) {
     _entries = _journal.availableTickets
-        .map((ticket) => SummaryTicketEntry(_journal, ticket))
+        .map((ticket) => SummaryTicket(_journal, ticket))
         .toList();
   }
 
-  List<SummaryTicketEntry> get entries => _entries;
+  List<SummaryTicket> get entries => _entries;
 
   int get count {
     int sum = 0;
-    for (SummaryTicketEntry entry in _entries) {
+    for (SummaryTicket entry in _entries) {
       sum += entry.count;
     }
     return sum;
@@ -24,7 +24,7 @@ class Summary extends EventEntry {
 
   int get price {
     int sum = 0;
-    for (SummaryTicketEntry entry in _entries) {
+    for (SummaryTicket entry in _entries) {
       sum += entry.price;
     }
     return sum;

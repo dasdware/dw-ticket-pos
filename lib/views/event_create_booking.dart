@@ -1,34 +1,34 @@
-import 'package:dw_ticket_pos/model/event_entry.dart';
-import 'package:dw_ticket_pos/model/journal_event_entry.dart';
-import 'package:dw_ticket_pos/widgets/event_entry_price.dart';
-import 'package:dw_ticket_pos/widgets/ticket_entries.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:dw_ticket_pos/model/event_journal.dart';
+import 'package:dw_ticket_pos/model/booking.dart';
+import 'package:dw_ticket_pos/model/ticket_entries.dart';
+import 'package:dw_ticket_pos/widgets/ticket_entries_price.dart';
+import 'package:dw_ticket_pos/widgets/ticket_entries.dart';
+import 'package:dw_ticket_pos/model/event.dart';
 
-class CreateEventJournalEntryView extends StatefulWidget {
-  final EventJournal eventJournal;
+class EventCreateBookingView extends StatefulWidget {
+  final Event event;
 
-  CreateEventJournalEntryView(this.eventJournal, {Key key}) : super(key: key);
+  EventCreateBookingView(this.event, {Key key}) : super(key: key);
 
   @override
-  _CreateEventJournalEntryViewState createState() =>
-      _CreateEventJournalEntryViewState();
+  _EventCreateBookingViewState createState() =>
+      _EventCreateBookingViewState();
 }
 
-class _CreateEventJournalEntryViewState
-    extends State<CreateEventJournalEntryView> {
-  JournalEventEntry _entry;
+class _EventCreateBookingViewState
+    extends State<EventCreateBookingView> {
+  Booking _booking;
 
   @override
   void initState() {
     super.initState();
-    _entry = widget.eventJournal.addEntry();
+    _booking = widget.event.addBooking();
   }
 
   void commit(BuildContext context) {
-    _entry.commit();
+    _booking.commit();
     Navigator.of(context).pop();
   }
 
@@ -38,8 +38,8 @@ class _CreateEventJournalEntryViewState
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<EventEntry>(
-      model: _entry,
+    return ScopedModel<TicketEntries>(
+      model: _booking,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Neue Ticketbuchung'),
@@ -48,7 +48,7 @@ class _CreateEventJournalEntryViewState
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new EventEntryPriceWidget(),
+            new TicketEntriesPriceWidget(),
             new TicketEntriesWidget(),
           ],
         ),
@@ -61,4 +61,3 @@ class _CreateEventJournalEntryViewState
     );
   }
 }
-

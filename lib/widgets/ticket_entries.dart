@@ -1,6 +1,7 @@
-import 'package:dw_ticket_pos/model/event_entry.dart';
-import 'package:dw_ticket_pos/widgets/ticket_entry.dart';
 import 'package:flutter/material.dart';
+
+import 'package:dw_ticket_pos/model/ticket_entries.dart';
+import 'package:dw_ticket_pos/widgets/ticket_entry.dart';
 
 class TicketEntriesWidget extends StatelessWidget {
   final bool readonly;
@@ -10,7 +11,7 @@ class TicketEntriesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: EventEntry.of(context)
+      children: TicketEntries.of(context)
           .entries
           .map((ticketEntry) => TicketEntryWidget(
                 ticketEntry,

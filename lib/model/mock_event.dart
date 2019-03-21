@@ -1,9 +1,9 @@
-import 'event_journal.dart';
+import 'event.dart';
 import 'ticket.dart';
 
-class MockEventJournal extends EventJournal {
+class MockEvent extends Event {
 
-  MockEventJournal() : super(
+  MockEvent() : super(
     'Veranstaltung #1', 
     DateTime.utc(2019, 4, 11),
     [

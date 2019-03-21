@@ -1,15 +1,13 @@
-import 'package:dw_ticket_pos/model/journal_event_entry.dart';
+import 'package:dw_ticket_pos/model/booking.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
 import 'package:dw_ticket_pos/model/ticket_entry.dart';
-import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
-class JournalTicketEntry extends TicketEntry {
-  final JournalEventEntry _eventEntry;
+class BookingTicket extends TicketEntry {
+  final Booking _booking;
   final Ticket _ticket;
   int _count = 0;
 
-  JournalTicketEntry(this._eventEntry, this._ticket);
+  BookingTicket(this._booking, this._ticket);
 
   int get count => _count;
   int get price => count * _ticket.price;
@@ -18,7 +16,7 @@ class JournalTicketEntry extends TicketEntry {
 
   void _changed() {
     notifyListeners();
-    _eventEntry.notifyListeners();
+    _booking.notifyListeners();
   }
 
   void updateCount(int amount) {

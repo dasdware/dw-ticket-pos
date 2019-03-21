@@ -1,6 +1,7 @@
-import 'package:dw_ticket_pos/model/journal_ticket_entry.dart';
-import 'package:dw_ticket_pos/model/ticket_entry.dart';
 import 'package:flutter/material.dart';
+
+import 'package:dw_ticket_pos/model/booking_ticket.dart';
+import 'package:dw_ticket_pos/model/ticket_entry.dart';
 
 class TicketEntryButtonWidget extends StatelessWidget {
   final int amount;
@@ -45,7 +46,7 @@ class TicketEntryButtonWidget extends StatelessWidget {
           ),
           onTap: () {
             // TODO: This is a bit hacky
-            if (entry is JournalTicketEntry) {
+            if (entry is BookingTicket) {
               entry.updateCount(amount);
             }
           },

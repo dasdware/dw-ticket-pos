@@ -1,14 +1,13 @@
 import 'dart:async';
-
-import 'package:dw_ticket_pos/views/event_journal.dart';
 import 'package:intl/date_symbol_data_local.dart' as intl_local_date_data;
+
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'model/event_journal.dart';
-import 'model/mock_event_journal.dart';
-
-import 'utils/format.dart';
+import 'package:dw_ticket_pos/model/event.dart';
+import 'package:dw_ticket_pos/model/mock_event.dart';
+import 'package:dw_ticket_pos/utils/format.dart';
+import 'package:dw_ticket_pos/views/event_home.dart';
 
 Future<Null> main() async {
   await intl_local_date_data.initializeDateFormatting();
@@ -18,12 +17,12 @@ Future<Null> main() async {
 }
 
 class DWTicketPosApp extends StatelessWidget {
-  final EventJournal _eventJournal = MockEventJournal();
+  final Event _event = MockEvent();
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<EventJournal>(
-      model: _eventJournal,
+    return ScopedModel<Event>(
+      model: _event,
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -38,7 +37,7 @@ class DWTicketPosApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: EventJournalView(),
+        home: EventHomeView(),
       ),
     );
   }
