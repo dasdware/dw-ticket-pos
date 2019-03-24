@@ -29,4 +29,12 @@ class Summary extends TicketEntries {
     }
     return sum;
   }
+
+  int get virtualPrice {
+    int sum = 0;
+    for (SummaryTicket entry in _entries) {
+      sum += entry.virtualPrice;
+    }
+    return sum;
+  }
 }

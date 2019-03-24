@@ -38,6 +38,12 @@ class SummaryTicket extends TicketEntry {
     return sum;
   }
 
+  int get virtualPrice {
+    int sum = 0;
+    _doForOurTickets((BookingTicket bookingTicket) { sum += bookingTicket.virtualPrice; });
+    return sum;
+  }
+
   static SummaryTicket of(BuildContext context) =>
       ScopedModel.of<SummaryTicket>(context);     
 }

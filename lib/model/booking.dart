@@ -23,6 +23,11 @@ class Booking extends TicketEntries {
         0, (int value, ticketEntry) => value + ticketEntry.price);
   }
 
+  int get virtualPrice {
+    return entries.fold(
+        0, (int value, ticketEntry) => value + ticketEntry.virtualPrice);
+  }
+
   List<BookingTicket> get entries => _entries;
 
   DateTime get timestamp => _timestamp;
