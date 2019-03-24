@@ -8,6 +8,8 @@ abstract class TicketEntry extends Model {
   int get price;
   int get virtualPrice;
 
+  bool get hasVirtualPrice => ticket.hasVirtualPrice && (count > 0);
+
   Ticket get ticket;
 
   static TicketEntry of(BuildContext context) =>

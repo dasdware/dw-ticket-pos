@@ -12,7 +12,7 @@ class BookingTicket extends TicketEntry {
   int get count => _count;
   int get price => count * _ticket.price;
   int get virtualPrice => count * ((_ticket.virtualPrice > -1) ? _ticket.virtualPrice : _ticket.price);
-
+  
   Ticket get ticket => _ticket;
 
   void _changed() {

@@ -10,11 +10,24 @@ class TicketEntryPriceWidget extends StatelessWidget {
     return Container(
         width: 70,
         alignment: Alignment.centerRight,
-        child: ScopedModelDescendant<TicketEntry>(
-          builder: (context, _, model) => Text(
-                formatPrice(model.price),
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-              ),
-        ));
+        child: ScopedModelDescendant<TicketEntry>(builder: (context, _, model) {
+          List<Widget> prices = [];
+          prices.add(Text(
+            formatPrice(model.price),
+            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+          ));
+          if (model.hasVirtualPrice) {
+            prices.add(Text(
+              '(${formatPrice(model.virtualPrice)})',
+              style: TextStyle(fontSize: 13.0),
+            ));
+          }
+          return Column(children: prices);
+        }
+            // Text(
+            //     formatPrice(model.price),
+            //     style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            //   ),
+            ));
   }
 }

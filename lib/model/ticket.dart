@@ -4,4 +4,6 @@ class Ticket {
   final int virtualPrice;
 
   Ticket(this.title, this.price, [this.virtualPrice = -1]);
+
+  bool get hasVirtualPrice => (virtualPrice > -1);
 }

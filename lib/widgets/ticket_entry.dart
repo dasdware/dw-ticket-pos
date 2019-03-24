@@ -16,7 +16,7 @@ class TicketEntryWidget extends StatelessWidget {
 
   String get priceLabel {
     String label = formatPrice(_entry.ticket.price);
-    if (_entry.ticket.virtualPrice > -1)
+    if (_entry.ticket.hasVirtualPrice)
       label = label + ' (' + formatPrice(_entry.ticket.virtualPrice) + ')';
     return label;
   }

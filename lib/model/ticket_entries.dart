@@ -7,7 +7,9 @@ abstract class TicketEntries extends Model {
   int get count;
   int get price;
   int get virtualPrice;
-  
+
+  bool get hasVirtualPrice => (price != virtualPrice);
+
   List<TicketEntry> get entries;
 
   static TicketEntries of(BuildContext context) =>

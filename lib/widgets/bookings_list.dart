@@ -13,15 +13,23 @@ class BookingsListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<Event>(
       builder: (context, _, model) => ListView(
-            children: model.entries.reversed
-                .map((entry) => ListTile(
-                      title: Text(formatDateTime(entry.timestamp)),
-                      subtitle: Text(formatTicketEntries(entry)),
-                      trailing: Text(formatPrice(entry.price),
-                          style: TextStyle(
-                              fontSize: 22.0, fontWeight: FontWeight.bold)),
-                    ))
-                .toList(),
+            children: model.entries.reversed.map((entry) {
+              List<Widget> prices = [];
+              prices.add(Text(formatPrice(entry.price),
+                  style:
+                      TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)));
+              if (entry.hasVirtualPrice) {
+                prices.add(Text(
+                  '(${formatPrice(entry.virtualPrice)})',
+                  style: TextStyle(fontSize: 14.0),
+                ));
+              }
+              return ListTile(
+                title: Text(formatDateTime(entry.timestamp)),
+                subtitle: Text(formatTicketEntries(entry)),
+                trailing: Column(children: prices),
+              );
+            }).toList(),
           ),
     );
   }
