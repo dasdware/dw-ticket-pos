@@ -23,11 +23,6 @@ class TicketEntryPriceWidget extends StatelessWidget {
             ));
           }
           return Column(children: prices);
-        }
-            // Text(
-            //     formatPrice(model.price),
-            //     style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-            //   ),
-            ));
+        }));
   }
 }

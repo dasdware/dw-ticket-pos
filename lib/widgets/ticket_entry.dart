@@ -25,14 +25,13 @@ class TicketEntryWidget extends StatelessWidget {
     List<Widget> widgets = [];
     if (!readonly) {
       widgets
-        ..add(TicketEntryButtonWidget(amount: -5))
-        ..add(TicketEntryButtonWidget(amount: -1));
+        ..add(TicketEntryButtonWidget(kind: TicketEntryButtonKind.reset))
+        ..add(TicketEntryButtonWidget(kind: TicketEntryButtonKind.decrement));
     }
     widgets.add(TicketEntryCountWidget());
     if (!readonly) {
       widgets
-        ..add(TicketEntryButtonWidget(amount: 1))
-        ..add(TicketEntryButtonWidget(amount: 5));
+          .add(TicketEntryButtonWidget(kind: TicketEntryButtonKind.increment));
     }
     widgets.add(TicketEntryPriceWidget());
     return widgets;

@@ -3,26 +3,54 @@ import 'package:flutter/material.dart';
 import 'package:dw_ticket_pos/model/booking_ticket.dart';
 import 'package:dw_ticket_pos/model/ticket_entry.dart';
 
+enum TicketEntryButtonKind { increment, decrement, reset }
+
 class TicketEntryButtonWidget extends StatelessWidget {
-  final int amount;
+  final TicketEntryButtonKind kind;
 
-  const TicketEntryButtonWidget({Key key, this.amount})
-      : super(key: key);
+  const TicketEntryButtonWidget({Key key, this.kind}) : super(key: key);
 
-  String get caption {
-    if (amount > 0)
-      return '+' + amount.toString();
-    else
-      return amount.toString();
+  IconData get icon {
+    switch (kind) {
+      case TicketEntryButtonKind.increment:
+        return Icons.add;
+      case TicketEntryButtonKind.decrement:
+        return Icons.remove;
+      case TicketEntryButtonKind.reset:
+        return Icons.cancel;
+      default:
+        return null;
+    }
   }
 
   Color get color {
-    if (amount > 0)
-      return Colors.greenAccent;
-    else if (amount < 0)
-      return Colors.redAccent;
-    else
-      return Colors.grey;
+    switch (kind) {
+      case TicketEntryButtonKind.increment:
+        return Colors.green;
+      case TicketEntryButtonKind.decrement:
+        return Colors.red;
+      case TicketEntryButtonKind.reset:
+        return Colors.grey;
+      default:
+        return null;
+    }
+  }
+
+  void _updateEntry(TicketEntry entry) {
+    // TODO: This is a bit hacky
+    if (entry is BookingTicket) {
+      switch (kind) {
+        case TicketEntryButtonKind.increment:
+          entry.updateCount(1);
+          return;
+        case TicketEntryButtonKind.decrement:
+          entry.updateCount(-1);
+          return;
+        case TicketEntryButtonKind.reset:
+          entry.resetCount();
+          return;
+      }
+    }
   }
 
   @override
@@ -35,21 +63,13 @@ class TicketEntryButtonWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.0),
         child: InkWell(
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Text(
-              this.caption,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
+            child: Icon(
+              icon,
+              color: Color.lerp(color, Colors.black, 0.5),
             ),
           ),
-          onTap: () {
-            // TODO: This is a bit hacky
-            if (entry is BookingTicket) {
-              entry.updateCount(amount);
-            }
-          },
+          onTap: () => _updateEntry(entry),
         ),
       ),
     );
