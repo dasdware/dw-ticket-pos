@@ -11,8 +11,10 @@ class BookingTicket extends TicketEntry {
 
   int get count => _count;
   int get price => count * _ticket.price;
-  int get virtualPrice => count * ((_ticket.virtualPrice > -1) ? _ticket.virtualPrice : _ticket.price);
-  
+  int get virtualPrice =>
+      count *
+      ((_ticket.virtualPrice > -1) ? _ticket.virtualPrice : _ticket.price);
+
   Ticket get ticket => _ticket;
 
   void _changed() {
@@ -21,15 +23,19 @@ class BookingTicket extends TicketEntry {
   }
 
   void updateCount(int amount) {
-    _count += amount;
-    if (count < 0) {
-      _count = 0;
-    }
-    _changed();
+    setCount(count + amount);
   }
 
   void resetCount() {
     _count = 0;
+    _changed();
+  }
+
+  void setCount(int value) {
+    _count = value;
+    if (count < 0) {
+      _count = 0;
+    }
     _changed();
   }
 }

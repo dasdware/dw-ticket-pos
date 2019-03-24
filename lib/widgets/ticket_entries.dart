@@ -10,14 +10,16 @@ class TicketEntriesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: TicketEntries.of(context)
-          .entries
-          .map((ticketEntry) => TicketEntryWidget(
-                ticketEntry,
-                readonly: readonly,
-              ))
-          .toList(),
+    return Expanded(
+      child: ListView(
+        children: TicketEntries.of(context)
+            .entries
+            .map((ticketEntry) => TicketEntryWidget(
+                  ticketEntry,
+                  readonly: readonly,
+                ))
+            .toList(),
+      ),
     );
   }
 }
