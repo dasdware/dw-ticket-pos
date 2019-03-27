@@ -13,12 +13,10 @@ class EventCreateBookingView extends StatefulWidget {
   EventCreateBookingView(this.event, {Key key}) : super(key: key);
 
   @override
-  _EventCreateBookingViewState createState() =>
-      _EventCreateBookingViewState();
+  _EventCreateBookingViewState createState() => _EventCreateBookingViewState();
 }
 
-class _EventCreateBookingViewState
-    extends State<EventCreateBookingView> {
+class _EventCreateBookingViewState extends State<EventCreateBookingView> {
   Booking _booking;
 
   @override
@@ -43,7 +41,10 @@ class _EventCreateBookingViewState
       child: Scaffold(
         appBar: AppBar(
           title: Text('Neue Ticketbuchung'),
-          leading: Icon(Icons.arrow_back),
+          leading: InkWell(
+            child: Icon(Icons.arrow_back),
+            onTap: () => Navigator.of(context).pop(),
+          ),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
