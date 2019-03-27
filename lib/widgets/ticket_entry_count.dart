@@ -18,15 +18,24 @@ class TicketEntryCountWidget extends StatelessWidget {
 
   Widget textField(TicketEntry model, BuildContext context) {
     final TextEditingController textController = TextEditingController();
-    textController.text = model.count.toString();
+    if (model.count > 0) {
+      textController.text = model.count.toString();
+    } else {
+      textController.text = '';
+    }
 
     return TextField(
       controller: textController,
       keyboardType: TextInputType.numberWithOptions(),
       textAlign: TextAlign.center,
+      decoration: InputDecoration(hintText: '0'),
       onChanged: (String value) {
         if (model is BookingTicket) {
-          model.setCount(int.parse(value));
+          if (value != '') {
+            model.setCount(int.parse(value));
+          } else {
+            model.setCount(0);
+          }
         }
       },
     );
@@ -35,7 +44,7 @@ class TicketEntryCountWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 30,
+      width: 26,
       alignment: Alignment.center,
       child: ScopedModelDescendant<TicketEntry>(
           builder: (context, _, model) => (readonly)

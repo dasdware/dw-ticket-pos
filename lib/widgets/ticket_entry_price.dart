@@ -8,7 +8,7 @@ class TicketEntryPriceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 70,
+        width: 60,
         alignment: Alignment.centerRight,
         child: ScopedModelDescendant<TicketEntry>(builder: (context, _, model) {
           List<Widget> prices = [];

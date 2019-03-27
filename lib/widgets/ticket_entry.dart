@@ -28,7 +28,9 @@ class TicketEntryWidget extends StatelessWidget {
         ..add(TicketEntryButtonWidget(kind: TicketEntryButtonKind.reset))
         ..add(TicketEntryButtonWidget(kind: TicketEntryButtonKind.decrement));
     }
+    widgets.add(SizedBox(width: 4.0,));
     widgets.add(TicketEntryCountWidget(readonly: readonly,));
+    widgets.add(SizedBox(width: 4.0,));
     if (!readonly) {
       widgets
           .add(TicketEntryButtonWidget(kind: TicketEntryButtonKind.increment));
