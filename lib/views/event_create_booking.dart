@@ -36,6 +36,8 @@ class _EventCreateBookingViewState extends State<EventCreateBookingView> {
 
   @override
   Widget build(BuildContext context) {
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
+
     return ScopedModel<TicketEntries>(
       model: _booking,
       child: Scaffold(
@@ -53,11 +55,13 @@ class _EventCreateBookingViewState extends State<EventCreateBookingView> {
             new TicketEntriesWidget(),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => commit(context),
-          tooltip: 'Tickets buchen',
-          child: Icon(Icons.check),
-        ),
+        floatingActionButton: (showFab)
+            ? FloatingActionButton(
+                onPressed: () => commit(context),
+                tooltip: 'Tickets buchen',
+                child: Icon(Icons.check),
+              )
+            : null,
       ),
     );
   }

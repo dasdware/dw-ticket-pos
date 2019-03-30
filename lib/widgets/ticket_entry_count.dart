@@ -29,7 +29,7 @@ class TicketEntryCountWidget extends StatelessWidget {
       keyboardType: TextInputType.numberWithOptions(),
       textAlign: TextAlign.center,
       decoration: InputDecoration(hintText: '0'),
-      onChanged: (String value) {
+      onSubmitted: (String value) {
         if (model is BookingTicket) {
           if (value != '') {
             model.setCount(int.parse(value));
