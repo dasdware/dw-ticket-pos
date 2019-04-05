@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/model/ticket.dart';
 import 'package:intl/intl.dart';
 
 import 'package:dw_ticket_pos/model/ticket_entries.dart';
@@ -7,6 +8,13 @@ String formatPrice(int price) {
       ',' +
       (price % 100).toString().padLeft(2, '0') +
       '€';
+}
+
+String formatTicketPrice(Ticket ticket) {
+  String label = formatPrice(ticket.price);
+  if (ticket.hasVirtualPrice)
+    label = label + ' (' + formatPrice(ticket.virtualPrice) + ')';
+  return label;
 }
 
 DateFormat _dateFormat;

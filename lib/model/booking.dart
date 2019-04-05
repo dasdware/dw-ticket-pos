@@ -32,8 +32,12 @@ class Booking extends TicketEntries {
 
   DateTime get timestamp => _timestamp;
 
-  void commit() {
-    _timestamp = DateTime.now();
+  void commit({DateTime timestamp}) {
+    if (timestamp != null) {
+      _timestamp = timestamp;
+    } else {
+      _timestamp = DateTime.now();
+    }
     _event.commit(this);
   }
 }

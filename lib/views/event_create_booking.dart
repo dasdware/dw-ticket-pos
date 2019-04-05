@@ -43,10 +43,10 @@ class _EventCreateBookingViewState extends State<EventCreateBookingView> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Neue Ticketbuchung'),
-          leading: InkWell(
-            child: Icon(Icons.arrow_back),
-            onTap: () => Navigator.of(context).pop(),
-          ),
+          // leading: InkWell(
+          //   child: Icon(Icons.arrow_back),
+          //   onTap: () => Navigator.of(context).pop(),
+          // ),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,

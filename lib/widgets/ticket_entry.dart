@@ -14,13 +14,6 @@ class TicketEntryWidget extends StatelessWidget {
   const TicketEntryWidget(this._entry, {Key key, this.readonly = false})
       : super(key: key);
 
-  String get priceLabel {
-    String label = formatPrice(_entry.ticket.price);
-    if (_entry.ticket.hasVirtualPrice)
-      label = label + ' (' + formatPrice(_entry.ticket.virtualPrice) + ')';
-    return label;
-  }
-
   List<Widget> _buildTrailingWidgets() {
     List<Widget> widgets = [];
     if (!readonly) {
@@ -45,7 +38,7 @@ class TicketEntryWidget extends StatelessWidget {
       model: this._entry,
       child: ListTile(
         title: Text(_entry.ticket.title),
-        subtitle: Text(priceLabel),
+        subtitle: Text(formatTicketPrice(_entry.ticket)),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.end,
