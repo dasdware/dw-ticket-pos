@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/views/ticket_details.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -23,10 +24,7 @@ class TicketListWidget extends StatelessWidget {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {},
-                            ),
+                            EditTicketButton(ticket: ticket),
                             DeleteTicketButton(storage: storage, ticket: ticket)
                           ],
                         ),
@@ -39,11 +37,28 @@ class TicketListWidget extends StatelessWidget {
   }
 }
 
+class EditTicketButton extends StatelessWidget {
+  final Ticket ticket;
+  const EditTicketButton({Key key, this.ticket}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: () => editTicket(
+            context,
+            ticket,
+          ),
+    );
+  }
+}
+
 class DeleteTicketButton extends StatelessWidget {
   final Storage storage;
   final Ticket ticket;
 
-  const DeleteTicketButton({Key key, this.storage, this.ticket}) : super(key: key);
+  const DeleteTicketButton({Key key, this.storage, this.ticket})
+      : super(key: key);
 
   void askDeleteTicket(BuildContext context) {
     showDialog(

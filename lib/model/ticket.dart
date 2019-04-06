@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class Ticket extends Model {
-  final String title;
-  final int price;
-  final int virtualPrice;
+  String title;
+  int price;
+  int virtualPrice;
 
   Ticket(this.title, this.price, [this.virtualPrice = -1]);
 
