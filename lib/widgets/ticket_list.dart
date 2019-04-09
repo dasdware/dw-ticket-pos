@@ -15,23 +15,51 @@ class TicketListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<Storage>(
-      builder: (context, _, storage) => ListView(
-            children: storage.tickets
-                .map(
-                  (ticket) => ListTile(
-                        title: Text(ticket.title),
-                        subtitle: Text(formatTicketPrice(ticket)),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            EditTicketButton(ticket: ticket),
-                            DeleteTicketButton(storage: storage, ticket: ticket)
-                          ],
-                        ),
-                        onTap: () {},
+      builder: (context, _, storage) => Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Expanded(
+                child: ListView(
+                  children: storage.tickets
+                      .map(
+                        (ticket) => ListTile(
+                              title: Text(ticket.title),
+                              subtitle: Text(formatTicketPrice(ticket)),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  EditTicketButton(ticket: ticket),
+                                  DeleteTicketButton(
+                                      storage: storage, ticket: ticket)
+                                ],
+                              ),
+                              onTap: () {},
+                            ),
+                      )
+                      .toList(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RaisedButton(
+                  color: Colors.green.shade900,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
                       ),
-                )
-                .toList(),
+                      Text(
+                        'Neues Ticket',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  onPressed: () => addTicket(context, storage),
+                ),
+              ),
+            ],
           ),
     );
   }

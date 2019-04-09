@@ -17,6 +17,13 @@ class Storage extends Model {
     return event;
   }
 
+  Ticket addTicket(String title, int price, int virtualPrice) {
+    final Ticket ticket = Ticket(title, price, virtualPrice);
+    tickets.add(ticket);
+    notifyListeners();
+    return ticket;
+  }
+
   void deleteTicket(Ticket ticket) {
     tickets.remove(ticket);
     notifyListeners();
