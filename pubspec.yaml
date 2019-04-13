@@ -26,6 +26,7 @@ dependencies:
 
   intl: ^0.15.7
   scoped_model: ^1.0.1
+  path_provider: ^0.5.0+1
 
 dev_dependencies:
   flutter_test:
