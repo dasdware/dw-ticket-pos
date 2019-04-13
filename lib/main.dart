@@ -5,14 +5,10 @@ import 'package:intl/date_symbol_data_local.dart' as intl_local_date_data;
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:dw_ticket_pos/model/mock_storage.dart';
 import 'package:dw_ticket_pos/utils/format.dart';
 
 Future<Storage> loadStorage() {
-  return Future<Storage>.delayed(
-    Duration(seconds: 2),
-    () => MockStorage(),
-  );
+  return Storage.load();
 }
 
 Future<Null> main() async {
