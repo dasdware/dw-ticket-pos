@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -24,6 +25,11 @@ class Event extends Model {
 
   void commit(Booking entry) {
     entries.add(entry);
+    notifyListeners();
+  }
+
+  void delete(Booking booking) {
+    entries.remove(booking);
     notifyListeners();
   }
 

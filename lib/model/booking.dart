@@ -40,4 +40,8 @@ class Booking extends TicketEntries {
     }
     _event.commit(this);
   }
+
+  void delete() {
+    _event.delete(this);
+  }
 }
