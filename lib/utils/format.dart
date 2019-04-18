@@ -19,10 +19,14 @@ String formatTicketPrice(Ticket ticket) {
 
 DateFormat _dateFormat;
 DateFormat _dateTimeFormat;
+DateFormat _inputDateFormat;
+DateFormat _inputTimeFormat;
 
 void initFormats() {
   _dateFormat = DateFormat.yMMMd('de_DE');
-  _dateTimeFormat = DateFormat('dd. MMM y HH:mm:ss', 'de_DE');
+  _dateTimeFormat = DateFormat('dd. MMM y HH:mm', 'de_DE');
+  _inputDateFormat = DateFormat('dd.MM.yyyy');
+  _inputTimeFormat = DateFormat('HH:mm');
 }
 
 String formatDate(DateTime date) {
@@ -31,6 +35,14 @@ String formatDate(DateTime date) {
 
 String formatDateTime(DateTime date) {
   return _dateTimeFormat.format(date);
+}
+
+String formatInputDate(DateTime date) {
+  return _inputDateFormat.format(date);
+}
+
+String formatInputTime(DateTime date) {
+  return _inputTimeFormat.format(date.toLocal());
 }
 
 String formatTicketEntries(TicketEntries ticketEntries) {

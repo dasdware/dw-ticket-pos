@@ -10,7 +10,7 @@ class StorageHomeView extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('DW Ticket-Verkaufspunkt'),
+          title: Text('DW Ticket Point of Sale'),
           bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.event)),

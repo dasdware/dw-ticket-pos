@@ -25,7 +25,7 @@ class DWTicketPosApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DW Ticket Verkaufspunkt',
+      title: 'DW Ticket Point of Sale',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

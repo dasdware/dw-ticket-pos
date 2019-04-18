@@ -5,11 +5,11 @@ class MockStorage extends Storage {
 
   MockStorage() {
     tickets
-      ..add(Ticket('Normalpreis', 800))
-      ..add(Ticket('Ermäßigt', 500))
-      ..add(Ticket('Freikarte', 0))
-      ..add(Ticket('Virtuelle Freikarte', 0, 500));
+      ..add(Ticket('Standard Fare', 800))
+      ..add(Ticket('Reduced Price', 500))
+      ..add(Ticket('Free Entry', 0))
+      ..add(Ticket('Virtual Free Entry', 0, 500));
 
-    createEvent('Veranstaltung #1', DateTime.utc(2019, 4, 11), tickets);
+    createEvent('Event #1', DateTime.utc(2019, 4, 11), tickets);
   }
 }
