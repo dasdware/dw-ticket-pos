@@ -51,7 +51,7 @@ class TicketListWidget extends StatelessWidget {
                         color: Colors.white,
                       ),
                       Text(
-                        'Neues Ticket',
+                        'New Ticket',
                         style: TextStyle(color: Colors.white),
                       ),
                     ],
@@ -93,19 +93,19 @@ class DeleteTicketButton extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Ticket löschen'),
+          title: Text('Delete ticket'),
           content: Text(
-              'Sind Sie sicher, dass das gewählte Ticket gelöscht werden soll?'),
+              'Are you sure that you want to delete the selected ticket?'),
           actions: [
             FlatButton(
-              child: Text('JA'),
+              child: Text('YES'),
               onPressed: () {
                 storage.deleteTicket(ticket);
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('NEIN'),
+              child: Text('NO'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

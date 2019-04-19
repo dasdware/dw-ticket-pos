@@ -57,7 +57,7 @@ class EventHomeView extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => EventCreateBookingView(event)));
                 },
-                tooltip: 'Neue Buchung',
+                tooltip: 'New ticket booking',
                 child: Icon(Icons.add),
               ),
             )),

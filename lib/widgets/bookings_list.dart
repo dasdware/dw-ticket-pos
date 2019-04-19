@@ -52,19 +52,19 @@ class DeleteBookingButton extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Buchung löschen'),
+          title: Text('Delete Booking'),
           content: Text(
-              'Sind Sie sicher, dass die gewählte Buchung gelöscht werden soll?'),
+              'Are you sure that you want do delete the selected booking?'),
           actions: [
             FlatButton(
-              child: Text('JA'),
+              child: Text('YES'),
               onPressed: () {
                 booking.delete();
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('NEIN'),
+              child: Text('NO'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

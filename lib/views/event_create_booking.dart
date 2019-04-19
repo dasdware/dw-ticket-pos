@@ -42,11 +42,7 @@ class _EventCreateBookingViewState extends State<EventCreateBookingView> {
       model: _booking,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Neue Ticketbuchung'),
-          // leading: InkWell(
-          //   child: Icon(Icons.arrow_back),
-          //   onTap: () => Navigator.of(context).pop(),
-          // ),
+          title: Text('New Ticket Booking'),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -58,7 +54,7 @@ class _EventCreateBookingViewState extends State<EventCreateBookingView> {
         floatingActionButton: (showFab)
             ? FloatingActionButton(
                 onPressed: () => commit(context),
-                tooltip: 'Tickets buchen',
+                tooltip: 'Book tickets',
                 child: Icon(Icons.check),
               )
             : null,

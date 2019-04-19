@@ -7,7 +7,7 @@ void editTicket(BuildContext context, Ticket ticket) {
     context,
     MaterialPageRoute(
       builder: (context) => TicketDetailsView(
-          viewTitle: 'Ticket bearbeiten',
+          viewTitle: 'Edit Ticket',
           ticketTitle: ticket.title,
           price: ticket.price,
           virtualPrice: ticket.virtualPrice,
@@ -27,7 +27,7 @@ void addTicket(BuildContext context, Storage storage) {
     context,
     MaterialPageRoute(
       builder: (context) => TicketDetailsView(
-          viewTitle: 'Neues Ticket anlegen',
+          viewTitle: 'Create new Ticket',
           ticketTitle: '',
           price: 1000,
           virtualPrice: -1,
@@ -89,15 +89,15 @@ class _TicketDetailsViewState extends State<TicketDetailsView> {
           child: Column(
             children: [
               InputField(
-                labelText: 'Ticketname',
+                labelText: 'Name',
                 controller: titleController,
               ),
               InputField(
-                labelText: 'Preis',
+                labelText: 'Price',
                 controller: priceController,
               ),
               CheckboxListTile(
-                title: Text('Hat virtuellen Preis'),
+                title: Text('Has virtual price'),
                 value: hasVirtualPrice,
                 onChanged: (bool value) {
                   setState(() {
@@ -106,7 +106,7 @@ class _TicketDetailsViewState extends State<TicketDetailsView> {
                 },
               ),
               InputField(
-                labelText: 'Virtueller Preis',
+                labelText: 'Virtual price',
                 enabled: hasVirtualPrice,
                 controller: virtualPriceController,
               ),
