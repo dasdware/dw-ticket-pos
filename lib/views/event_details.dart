@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
 import 'package:dw_ticket_pos/utils/format.dart';
+import 'package:dw_ticket_pos/widgets/ticket_list_tiles.dart';
 import 'package:flutter/material.dart';
 
 void addEvent(BuildContext context, Storage storage) {
@@ -180,13 +181,12 @@ class TicketSelectionListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return TicketListTile(
+      ticket: selection.ticket,
       leading: Checkbox(
         value: selection.selected,
         onChanged: (value) => selection.selected = value,
       ),
-      title: Text(selection.ticket.title),
-      subtitle: Text(formatTicketPrice(selection.ticket)),
     );
   }
 }

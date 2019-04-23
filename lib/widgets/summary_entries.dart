@@ -1,17 +1,17 @@
-import 'package:dw_ticket_pos/widgets/ticket_entry_edit.dart';
+import 'package:dw_ticket_pos/model/ticket_entries.dart';
+import 'package:dw_ticket_pos/widgets/ticket_list_tiles.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dw_ticket_pos/model/ticket_entries.dart';
-
-class TicketEntriesWidget extends StatelessWidget {
-
+class SummaryEntries extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView(
         children: TicketEntries.of(context)
             .entries
-            .map((ticketEntry) => TicketEntryEditListTile(ticketEntry))
+            .map((ticketEntry) => TicketListSummaryTile(
+              entry: ticketEntry,
+                ))
             .toList(),
       ),
     );

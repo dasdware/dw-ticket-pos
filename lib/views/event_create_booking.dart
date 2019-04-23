@@ -47,8 +47,8 @@ class _EventCreateBookingViewState extends State<EventCreateBookingView> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new TicketEntriesPriceWidget(),
-            new TicketEntriesWidget(),
+            TicketEntriesPriceWidget(),
+            TicketEntriesWidget(),
           ],
         ),
         floatingActionButton: (showFab)
