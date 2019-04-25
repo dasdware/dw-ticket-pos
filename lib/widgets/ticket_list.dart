@@ -15,51 +15,23 @@ class TicketListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<Storage>(
-      builder: (context, _, storage) => Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Expanded(
-                child: ListView(
-                  children: storage.tickets
-                      .map(
-                        (ticket) => ListTile(
-                              title: Text(ticket.title),
-                              subtitle: Text(formatTicketPrice(ticket)),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  EditTicketButton(ticket: ticket),
-                                  DeleteTicketButton(
-                                      storage: storage, ticket: ticket)
-                                ],
-                              ),
-                              onTap: () {},
-                            ),
-                      )
-                      .toList(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: RaisedButton(
-                  color: Colors.green.shade900,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Icon(
-                        Icons.add,
-                        color: Colors.white,
+      builder: (context, _, storage) => ListView(
+            children: storage.tickets
+                .map(
+                  (ticket) => ListTile(
+                        title: Text(ticket.title),
+                        subtitle: Text(formatTicketPrice(ticket)),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            EditTicketButton(ticket: ticket),
+                            DeleteTicketButton(storage: storage, ticket: ticket)
+                          ],
+                        ),
+                        onTap: () {},
                       ),
-                      Text(
-                        'New Ticket',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  onPressed: () => addTicket(context, storage),
-                ),
-              ),
-            ],
+                )
+                .toList(),
           ),
     );
   }
@@ -94,8 +66,8 @@ class DeleteTicketButton extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Delete ticket'),
-          content: Text(
-              'Are you sure that you want to delete the selected ticket?'),
+          content:
+              Text('Are you sure that you want to delete the selected ticket?'),
           actions: [
             FlatButton(
               child: Text('YES'),
