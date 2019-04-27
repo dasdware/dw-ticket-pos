@@ -46,27 +46,7 @@ class Application extends StatelessWidget {
     final theme = ApplicationTheme.of(context);
     return MaterialApp(
       title: 'DW Ticket Point of Sale',
-      theme: ThemeData(
-        accentColor: theme.primaryColor,
-        primaryColor: theme.primaryColor,
-        cursorColor: theme.primaryColor,
-
-        textSelectionColor: theme.primaryColor,
-        textSelectionHandleColor: theme.primaryColor,
-
-        inputDecorationTheme: InputDecorationTheme(
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.primaryColor,
-            ),
-          ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: theme.primaryDimmedColor,
-            ),
-          ),
-        ),
-      ),
+      theme: theme.themeData,
       home: FutureBuilder<Storage>(
         future: this.storageLoader,
         builder: (context, storage) {
