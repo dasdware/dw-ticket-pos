@@ -45,6 +45,7 @@ class EditTicketButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.edit),
+      color: Theme.of(context).primaryColor,
       onPressed: () => editTicket(
             context,
             ticket,
@@ -92,6 +93,7 @@ class DeleteTicketButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.delete),
+      color: Theme.of(context).primaryColor,
       onPressed: () => askDeleteTicket(context),
     );
   }
