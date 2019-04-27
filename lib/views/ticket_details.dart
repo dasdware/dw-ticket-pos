@@ -1,5 +1,7 @@
 import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
+import 'package:dw_ticket_pos/widgets/application_scaffold.dart';
+import 'package:dw_ticket_pos/widgets/application_theme.dart';
 import 'package:flutter/material.dart';
 
 void editTicket(BuildContext context, Ticket ticket) {
@@ -11,6 +13,8 @@ void editTicket(BuildContext context, Ticket ticket) {
           ticketTitle: ticket.title,
           price: ticket.price,
           virtualPrice: ticket.virtualPrice,
+          commitButtonTitle: 'Apply changes',
+          commitButtonHint: 'Apply the changes to the currently selected ticket',
           onCommit: (String title, int price, bool hasVirtualPrice,
               int virtualPrice) {
             ticket.title = title;
@@ -31,9 +35,12 @@ void addTicket(BuildContext context, Storage storage) {
           ticketTitle: '',
           price: 1000,
           virtualPrice: -1,
+          commitButtonTitle: 'Create new Ticket',
+          commitButtonHint: 'Create ticket with the given properties',
           onCommit: (String title, int price, bool hasVirtualPrice,
               int virtualPrice) {
-            storage.addTicket(title, price, hasVirtualPrice ? virtualPrice : -1);
+            storage.addTicket(
+                title, price, hasVirtualPrice ? virtualPrice : -1);
             return true;
           }),
     ),
@@ -48,10 +55,19 @@ class TicketDetailsView extends StatefulWidget {
   final String ticketTitle;
   final int price;
   final int virtualPrice;
+  final String commitButtonTitle;
+  final String commitButtonHint;
   final OnTicketDetailsCommit onCommit;
 
   const TicketDetailsView(
-      {Key key, this.viewTitle, this.ticketTitle, this.price, this.virtualPrice, this.onCommit})
+      {Key key,
+      this.viewTitle,
+      this.ticketTitle,
+      this.price,
+      this.virtualPrice,
+      this.commitButtonTitle,
+      this.commitButtonHint,
+      this.onCommit})
       : super(key: key);
 
   @override
@@ -68,8 +84,7 @@ class _TicketDetailsViewState extends State<TicketDetailsView> {
   initState() {
     super.initState();
     titleController = TextEditingController(text: widget.ticketTitle);
-    priceController =
-        TextEditingController(text: widget.price.toString());
+    priceController = TextEditingController(text: widget.price.toString());
     hasVirtualPrice = (widget.virtualPrice > -1);
     virtualPriceController = TextEditingController(
         text: hasVirtualPrice ? widget.virtualPrice.toString() : '');
@@ -77,15 +92,12 @@ class _TicketDetailsViewState extends State<TicketDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.viewTitle),
-      ),
+    return ApplicationScaffold(
+        viewModel: ApplicationScaffoldViewModel(
+      title: widget.viewTitle,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Column(
             children: [
               InputField(
@@ -114,23 +126,23 @@ class _TicketDetailsViewState extends State<TicketDetailsView> {
           ),
         ),
       ),
-      floatingActionButton: (showFab)
-          ? FloatingActionButton(
-              child: Icon(Icons.check),
-              onPressed: () {
-                if (widget.onCommit == null ||
-                    widget.onCommit(
-                      titleController.text,
-                      int.tryParse(priceController.text) ?? -1,
-                      hasVirtualPrice,
-                      int.tryParse(virtualPriceController.text) ?? -1,
-                    )) {
-                  Navigator.of(context).pop();
-                }
-              },
-            )
-          : null,
-    );
+      mainAction: MainActionViewModel(
+        title: widget.commitButtonTitle,
+        hint: widget.commitButtonHint,
+        icon: Icons.check,
+        onPressed: () {
+          if (widget.onCommit == null ||
+              widget.onCommit(
+                titleController.text,
+                int.tryParse(priceController.text) ?? -1,
+                hasVirtualPrice,
+                int.tryParse(virtualPriceController.text) ?? -1,
+              )) {
+            Navigator.of(context).pop();
+          }
+        },
+      ),
+    ));
   }
 }
 
@@ -151,7 +163,9 @@ class InputField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: TextField(
-        decoration: InputDecoration(labelText: labelText),
+        decoration: InputDecoration(
+          labelText: labelText,
+        ),
         enabled: enabled,
         controller: controller,
       ),

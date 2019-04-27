@@ -44,11 +44,13 @@ class TabsViewModel {
 class ApplicationScaffoldViewModel {
   final String title;
   final TabsViewModel tabs;
+  final Widget body;
   final MainActionViewModel mainAction;
 
   ApplicationScaffoldViewModel({
     @required this.title,
     this.tabs,
+    this.body,
     this.mainAction,
   });
 }
@@ -127,7 +129,7 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
         children: viewModel.tabs.tabs.map((tab) => tab.body).toList(),
       );
     } else {
-      return Container();
+      return viewModel.body;
     }
   }
 
@@ -141,7 +143,9 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
       );
 
   Widget _buildFloatingActionButton(BuildContext context) {
-    if (_haveTabs) {
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
+      return null;
+    } else if (_haveTabs) {
       return MainActionButtons(
         tabController: _tabController,
         viewModels: viewModel.tabs.tabs
@@ -159,12 +163,26 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
     }
   }
 
-  Widget _buildAppBar(BuildContext context) => AppBar(
-        backgroundColor: ApplicationTheme.of(context).primaryBackgroundColor,
-        elevation: 0,
-        title: _buildTitle(context),
-        bottom: _buildAppBarBottom(context),
-      );
+  Widget _buildAppBar(BuildContext context) {
+    final theme = ApplicationTheme.of(context);
+    final navigator = Navigator.of(context);
+
+    return AppBar(
+      backgroundColor: theme.primaryBackgroundColor,
+      elevation: 0,
+      leading: (navigator.canPop())
+          ? IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: theme.primaryColor,
+              ),
+              onPressed: () => navigator.pop(),
+            )
+          : null,
+      title: _buildTitle(context),
+      bottom: _buildAppBarBottom(context),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

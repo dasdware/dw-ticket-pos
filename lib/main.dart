@@ -26,24 +26,59 @@ class DWTicketPosApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ApplicationTheme(
-      primaryColor: Color.lerp(Colors.deepPurpleAccent, Colors.black, 0.4),
+      primaryColor: Color.lerp(Colors.deepPurple, Colors.black, 0.4),
       backgroundColor: Colors.white,
-      
-      child: MaterialApp(
-        title: 'DW Ticket Point of Sale',
-        home: FutureBuilder<Storage>(
-          future: this.storageLoader,
-          builder: (context, storage) {
-            if (!storage.hasData) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return ScopedModel<Storage>(
-                model: storage.data,
-                child: StorageHomeView(),
-              );
-            }
-          },
+      child: new Application(storageLoader: storageLoader),
+    );
+  }
+}
+
+class Application extends StatelessWidget {
+  const Application({
+    Key key,
+    @required this.storageLoader,
+  }) : super(key: key);
+
+  final Future<Storage> storageLoader;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = ApplicationTheme.of(context);
+    return MaterialApp(
+      title: 'DW Ticket Point of Sale',
+      theme: ThemeData(
+        accentColor: theme.primaryColor,
+        primaryColor: theme.primaryColor,
+        cursorColor: theme.primaryColor,
+
+        textSelectionColor: theme.primaryColor,
+        textSelectionHandleColor: theme.primaryColor,
+
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: theme.primaryColor,
+            ),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: theme.primaryDimmedColor,
+            ),
+          ),
         ),
+      ),
+      home: FutureBuilder<Storage>(
+        future: this.storageLoader,
+        builder: (context, storage) {
+          if (!storage.hasData) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return ScopedModel<Storage>(
+              model: storage.data,
+              child: StorageHomeView(),
+            );
+          }
+        },
       ),
     );
   }
