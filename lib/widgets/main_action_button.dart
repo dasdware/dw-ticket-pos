@@ -100,13 +100,7 @@ class _MainActionButtonsState extends State<MainActionButtons> {
     if (widget.tabController.index < widget.viewModels.length) {
       final offset = widget.tabController.offset.abs();
       final opacity = (offset < 0.5) ? 1.0 - offset * 2 : (offset - 0.5) * 2.0;
-      final index = widget.tabController.indexIsChanging
-          // TODO: Shouldn't index and previousIndex be swapped here?
-          //   It works but it seems to contradict with the documentation...
-          ?  (offset < 0.5)
-              ? widget.tabController.index
-              : widget.tabController.previousIndex
-          : (widget.tabController.index + widget.tabController.offset).round();
+      final index = (widget.tabController.index + widget.tabController.offset).round();
 
       return Opacity(
         opacity: opacity,
