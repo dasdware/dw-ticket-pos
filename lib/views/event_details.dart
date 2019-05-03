@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
 import 'package:dw_ticket_pos/utils/format.dart';
+import 'package:dw_ticket_pos/widgets/application_scaffold.dart';
 import 'package:dw_ticket_pos/widgets/ticket_list_tiles.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +13,10 @@ void addEvent(BuildContext context, Storage storage) {
     MaterialPageRoute(
       builder: (context) => EventDetailsView(
           storage: storage,
-          viewTitle: 'Create new event',
+          viewTitle: 'Create new Event',
           eventTitle: '',
           dateTime: DateTime.now(),
+          mainActionTitle: 'Create new Event',
           onCommit: (String title, DateTime dateTime, List<Ticket> tickets) {
             storage.createEvent(title, dateTime, tickets);
             return true;
@@ -45,6 +47,8 @@ class EventDetailsView extends StatefulWidget {
   final String viewTitle;
   final String eventTitle;
   final DateTime dateTime;
+  final String mainActionTitle;
+  final String mainActionHint;
   final OnEventDetailsCommit onCommit;
 
   const EventDetailsView(
@@ -53,6 +57,8 @@ class EventDetailsView extends StatefulWidget {
       this.viewTitle,
       this.eventTitle,
       this.dateTime,
+      this.mainActionTitle,
+      this.mainActionHint,
       this.onCommit})
       : super(key: key);
 
@@ -108,7 +114,66 @@ class _EventDetailsViewState extends State<EventDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
+    return ApplicationScaffold(
+      viewModel: ApplicationScaffoldViewModel(
+          title: widget.viewTitle,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InputField(
+                    labelText: 'Event title',
+                    controller: titleController,
+                  ),
+                  ButtonedText(
+                    label: 'Date',
+                    value: formatInputDate(dateTime),
+                    icon: Icons.today,
+                    onPressed: () => _selectDate(context),
+                  ),
+                  ButtonedText(
+                    label: 'Time',
+                    value: formatInputTime(dateTime),
+                    icon: Icons.watch_later,
+                    onPressed: () => _selectTime(context),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8.0),
+                    child: Text('Available Tickets'),
+                  ),
+                ]..addAll(
+                    ticketSelection.map(
+                      (selection) =>
+                          new TicketSelectionListTile(selection: selection),
+                    ),
+                  ),
+              ),
+            ),
+          ),
+          mainAction: MainActionViewModel(
+            icon: Icons.check,
+            title: widget.mainActionTitle,
+            hint: widget.mainActionHint,
+            onPressed: () {
+              if (widget.onCommit == null ||
+                  widget.onCommit(
+                      titleController.text,
+                      dateTime,
+                      ticketSelection
+                          .where((selection) => selection.selected)
+                          .map((selection) => selection.ticket)
+                          .toList())) {
+                Navigator.of(context).pop();
+              }
+            },
+          )),
+    );
+
+    /*  final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.viewTitle),
@@ -167,7 +232,7 @@ class _EventDetailsViewState extends State<EventDetailsView> {
               },
             )
           : null,
-    );
+    );*/
   }
 }
 
