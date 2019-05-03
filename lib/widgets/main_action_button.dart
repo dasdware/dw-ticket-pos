@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/widgets/application_theme.dart';
 import 'package:flutter/material.dart';
 
 class MainActionButtonViewModel {
@@ -26,7 +27,7 @@ class MainActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.transparent,
+        color: ApplicationTheme.of(context).primaryButtonBackgroundColor,
         border: Border.all(
           color: viewModel.color,
           width: 2.0,

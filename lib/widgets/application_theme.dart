@@ -4,6 +4,7 @@ class ApplicationTheme extends InheritedWidget {
   final Color primaryColor;
   get primaryBackgroundColor => primaryColor.withOpacity(0.075);
   get primaryDimmedColor => primaryColor.withOpacity(0.6);
+  get primaryButtonBackgroundColor => primaryColor.withOpacity(0.25);
 
   final Color backgroundColor;
 
