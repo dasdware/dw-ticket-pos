@@ -1,4 +1,5 @@
 import 'package:dw_ticket_pos/model/storage.dart';
+import 'package:dw_ticket_pos/widgets/application_scaffold.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dw_ticket_pos/model/event.dart';
@@ -20,65 +21,43 @@ class EventHomeView extends StatelessWidget {
       model: storage,
       child: ScopedModel<Event>(
         model: event,
-        child: DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: AppBar(
-                title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(event.name),
-                      Text(formatDate(event.dateTime),
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 14)),
-                    ]),
-                bottom: TabBar(
-                  tabs: [
-                    Tab(icon: Icon(Icons.assessment)),
-                    Tab(icon: Icon(Icons.list)),
-                  ],
-                ),
-                actions: [
-                  new SaveButton(),
-                ],
+        child: ApplicationScaffold(
+          viewModel: ApplicationScaffoldViewModel(
+            title: event.name,
+            subtitle: formatDate(event.dateTime),
+            actions: [
+              ActionViewModel(
+                icon: Icons.save,
+                hint: 'Save the current state in the storage',
+                onPressed: () => storage.save(),
               ),
-              body: TabBarView(
-                children: [
-                  // EventJournalEntryWidget(eventJournal.addEntry(), null),
-                  new BookingsSummaryWidget(),
-                  new BookingsListWidget(),
-                ],
+            ],
+            tabs: TabsViewModel(initialTabIndex: 0, tabs: [
+              TabViewModel(
+                icon: Icons.assessment,
+                hint: 'Bookings summary',
+                body: BookingsSummaryWidget(),
               ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EventCreateBookingView(event)));
-                },
-                tooltip: 'New ticket booking',
-                child: Icon(Icons.add),
+              TabViewModel(
+                icon: Icons.list,
+                hint: 'Bookings list',
+                body: BookingsListWidget(),
               ),
-            )),
+            ]),
+            mainAction: MainActionViewModel(
+              icon: Icons.add_circle,
+              title: 'New Booking',
+              hint: 'Create new ticket Booking',
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EventCreateBookingView(event)));
+              },
+            ),
+          ),
+        ),
       ),
-    );
-  }
-}
-
-class SaveButton extends StatelessWidget {
-  const SaveButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.save),
-      onPressed: () {
-        final Storage storage = Storage.of(context);
-        storage.save();
-      },
     );
   }
 }

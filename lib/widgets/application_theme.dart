@@ -8,12 +8,22 @@ class ApplicationTheme extends InheritedWidget {
 
   final Color backgroundColor;
 
-  const ApplicationTheme({
+  final TextStyle titleTextStyle;
+  final TextStyle subtitleTextStyle;
+
+  ApplicationTheme({
     Key key,
     @required this.primaryColor,
     @required this.backgroundColor,
     @required Widget child,
-  }) : super(key: key, child: child);
+  }) 
+  : titleTextStyle = TextStyle(
+      color: primaryColor),
+    subtitleTextStyle = TextStyle(
+      color: primaryColor,
+      fontWeight: FontWeight.normal, 
+      fontSize: 14),
+    super(key: key, child: child);
 
   @override
   bool updateShouldNotify(ApplicationTheme oldWidget) =>

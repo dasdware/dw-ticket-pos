@@ -41,14 +41,30 @@ class TabsViewModel {
   });
 }
 
+class ActionViewModel {
+  final IconData icon;
+  final String hint;
+  final VoidCallback onPressed;
+
+  ActionViewModel({
+    @required this.icon,
+    @required this.hint,
+    @required this.onPressed,
+  });
+}
+
 class ApplicationScaffoldViewModel {
   final String title;
+  final String subtitle;
+  final List<ActionViewModel> actions;
   final TabsViewModel tabs;
   final Widget body;
   final MainActionViewModel mainAction;
 
   ApplicationScaffoldViewModel({
     @required this.title,
+    this.subtitle,
+    this.actions,
     this.tabs,
     this.body,
     this.mainAction,
@@ -94,13 +110,56 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
 
   get _haveTabs => _tabController != null;
 
+  get _haveMainActionButtonPerTab {
+    if (!_haveTabs) {
+      return false;
+    }
+
+    for (TabViewModel tab in viewModel.tabs.tabs) {
+      if (tab.mainAction == null) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   Widget _buildTitle(BuildContext context) {
-    return Text(
+    Text title = Text(
       viewModel.title,
-      style: TextStyle(
-        color: ApplicationTheme.of(context).primaryColor,
-      ),
+      style: ApplicationTheme.of(context).titleTextStyle,
     );
+
+    if (viewModel.subtitle != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          title,
+          Text(viewModel.subtitle,
+              style: ApplicationTheme.of(context).subtitleTextStyle)
+        ],
+      );
+    } else {
+      return title;
+    }
+  }
+
+  List<Widget> _buildActions(BuildContext context) {
+    if (viewModel.actions == null || viewModel.actions.length == 0) {
+      return null;
+    }
+
+    return viewModel.actions
+        .map(
+          (action) => IconButton(
+                icon: Icon(action.icon),
+                color: ApplicationTheme.of(context).primaryColor,
+                tooltip: action.hint,
+                onPressed: action.onPressed,
+              ),
+        )
+        .toList();
   }
 
   Widget _buildAppBarBottom(BuildContext context) {
@@ -145,7 +204,7 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
   Widget _buildFloatingActionButton(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       return null;
-    } else if (_haveTabs) {
+    } else if (_haveMainActionButtonPerTab) {
       return MainActionButtons(
         tabController: _tabController,
         viewModels: viewModel.tabs.tabs
@@ -180,6 +239,7 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
             )
           : null,
       title: _buildTitle(context),
+      actions: _buildActions(context),
       bottom: _buildAppBarBottom(context),
     );
   }
