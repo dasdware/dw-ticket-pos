@@ -1,22 +1,22 @@
 import 'package:dw_ticket_pos/widgets/application_theme.dart';
 import 'package:flutter/material.dart';
 
-class MainActionButtonViewModel {
+class MainActionViewModel {
   final IconData icon;
-  final String caption;
-  final Color color;
+  final String title;
+  final String hint;
   final VoidCallback onPressed;
 
-  const MainActionButtonViewModel({
-    this.icon,
-    this.caption = '',
-    this.color = Colors.black,
-    this.onPressed,
+  MainActionViewModel({
+    @required this.icon,
+    @required this.title,
+    @required this.hint,
+    @required this.onPressed,
   });
 }
 
 class MainActionButton extends StatelessWidget {
-  final MainActionButtonViewModel viewModel;
+  final MainActionViewModel viewModel;
 
   const MainActionButton({
     Key key,
@@ -25,11 +25,14 @@ class MainActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color foregroundColor = ApplicationTheme.of(context).primaryColor;
+    final Color backgroundColor = ApplicationTheme.of(context).primaryButtonBackgroundColor;
+
     return Container(
       decoration: BoxDecoration(
-        color: ApplicationTheme.of(context).primaryButtonBackgroundColor,
+        color: backgroundColor,
         border: Border.all(
-          color: viewModel.color,
+          color: foregroundColor,
           width: 2.0,
         ),
         borderRadius: BorderRadius.circular(20.0),
@@ -44,14 +47,14 @@ class MainActionButton extends StatelessWidget {
             children: <Widget>[
               Icon(
                 viewModel.icon,
-                color: viewModel.color,
+                color: foregroundColor,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 4.0),
                 child: Text(
-                  viewModel.caption,
+                  viewModel.title,
                   style: TextStyle(
-                    color: viewModel.color,
+                    color: foregroundColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 14.0,
                   ),
@@ -67,7 +70,7 @@ class MainActionButton extends StatelessWidget {
 
 class MainActionButtons extends StatefulWidget {
   final TabController tabController;
-  final List<MainActionButtonViewModel> viewModels;
+  final List<MainActionViewModel> viewModels;
 
   const MainActionButtons({
     Key key,

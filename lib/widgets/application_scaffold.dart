@@ -2,20 +2,6 @@ import 'package:dw_ticket_pos/widgets/application_theme.dart';
 import 'package:dw_ticket_pos/widgets/main_action_button.dart';
 import 'package:flutter/material.dart';
 
-class MainActionViewModel {
-  final IconData icon;
-  final String title;
-  final String hint;
-  final VoidCallback onPressed;
-
-  MainActionViewModel({
-    @required this.icon,
-    @required this.title,
-    @required this.hint,
-    @required this.onPressed,
-  });
-}
-
 class TabViewModel {
   final String hint;
   final IconData icon;
@@ -192,15 +178,6 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
     }
   }
 
-  MainActionButtonViewModel _buildMainActionButtonViewModel(
-          BuildContext context, MainActionViewModel model) =>
-      MainActionButtonViewModel(
-        icon: model.icon,
-        caption: model.title,
-        color: ApplicationTheme.of(context).primaryColor,
-        onPressed: model.onPressed,
-      );
-
   Widget _buildFloatingActionButton(BuildContext context) {
     if (MediaQuery.of(context).viewInsets.bottom > 0) {
       return null;
@@ -208,14 +185,12 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
       return MainActionButtons(
         tabController: _tabController,
         viewModels: viewModel.tabs.tabs
-            .map((tab) =>
-                _buildMainActionButtonViewModel(context, tab.mainAction))
+            .map((tab) => tab.mainAction)
             .toList(),
       );
     } else if (viewModel.mainAction != null) {
       return MainActionButton(
-        viewModel:
-            _buildMainActionButtonViewModel(context, viewModel.mainAction),
+        viewModel: viewModel.mainAction,
       );
     } else {
       return null;
