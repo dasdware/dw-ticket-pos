@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/widgets/action_button.dart';
 import 'package:dw_ticket_pos/widgets/application_theme.dart';
 import 'package:dw_ticket_pos/widgets/main_action_button.dart';
 import 'package:flutter/material.dart';
@@ -24,18 +25,6 @@ class TabsViewModel {
   TabsViewModel({
     @required this.tabs,
     this.initialTabIndex = 0,
-  });
-}
-
-class ActionViewModel {
-  final IconData icon;
-  final String hint;
-  final VoidCallback onPressed;
-
-  ActionViewModel({
-    @required this.icon,
-    @required this.hint,
-    @required this.onPressed,
   });
 }
 
@@ -137,14 +126,7 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
     }
 
     return viewModel.actions
-        .map(
-          (action) => IconButton(
-                icon: Icon(action.icon),
-                color: ApplicationTheme.of(context).primaryColor,
-                tooltip: action.hint,
-                onPressed: action.onPressed,
-              ),
-        )
+        .map((action) => ActionButton(viewModel: action))
         .toList();
   }
 
@@ -184,9 +166,7 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
     } else if (_haveMainActionButtonPerTab) {
       return MainActionButtons(
         tabController: _tabController,
-        viewModels: viewModel.tabs.tabs
-            .map((tab) => tab.mainAction)
-            .toList(),
+        viewModels: viewModel.tabs.tabs.map((tab) => tab.mainAction).toList(),
       );
     } else if (viewModel.mainAction != null) {
       return MainActionButton(

@@ -1,4 +1,5 @@
 import 'package:dw_ticket_pos/views/ticket_details.dart';
+import 'package:dw_ticket_pos/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -43,13 +44,12 @@ class EditTicketButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.edit),
-      color: Theme.of(context).primaryColor,
-      onPressed: () => editTicket(
-            context,
-            ticket,
-          ),
+    return ActionButton(
+      viewModel: ActionViewModel(
+        icon: Icons.edit,
+        hint: 'Edit the details of this ticket',
+        onPressed: () => editTicket(context, ticket),
+      ),
     );
   }
 }
@@ -91,10 +91,12 @@ class DeleteTicketButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.delete),
-      color: Theme.of(context).primaryColor,
-      onPressed: () => askDeleteTicket(context),
+    return ActionButton(
+      viewModel: ActionViewModel(
+        icon: Icons.delete,
+        hint: 'Delete this ticket',
+        onPressed: () => askDeleteTicket(context),
+      ),
     );
   }
 }

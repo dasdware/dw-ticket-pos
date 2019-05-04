@@ -1,4 +1,5 @@
 import 'package:dw_ticket_pos/model/booking.dart';
+import 'package:dw_ticket_pos/widgets/action_button.dart';
 import 'package:dw_ticket_pos/widgets/application_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -78,10 +79,12 @@ class DeleteBookingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.delete),
-      color: ApplicationTheme.of(context).primaryColor,
-      onPressed: () => askDeleteBooking(context),
+    return ActionButton(
+      viewModel: ActionViewModel(
+        icon: Icons.delete,
+        hint: 'Delete this booking',
+        onPressed: () => askDeleteBooking(context),  
+      ),
     );
   }
 }
