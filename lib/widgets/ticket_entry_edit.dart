@@ -17,11 +17,8 @@ class TicketEntryEditListTile extends StatelessWidget {
     return [
       TicketEntryButtonWidget(kind: TicketEntryButtonKind.reset),
       TicketEntryButtonWidget(kind: TicketEntryButtonKind.decrement),
-      SizedBox(width: 4.0),
       TicketEntryCountEdit(),
-      SizedBox(width: 4.0),
       TicketEntryButtonWidget(kind: TicketEntryButtonKind.increment),
-      TicketEntryPriceWidget(),
     ];
   }
 

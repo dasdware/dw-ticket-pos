@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dw_ticket_pos/model/booking_ticket.dart';
@@ -10,27 +11,27 @@ class TicketEntryButtonWidget extends StatelessWidget {
 
   const TicketEntryButtonWidget({Key key, this.kind}) : super(key: key);
 
-  IconData get icon {
+  ActionViewModel _buildActionViewModel(BuildContext context) {
+    print(kind);
     switch (kind) {
       case TicketEntryButtonKind.increment:
-        return Icons.add;
+        return ActionViewModel(
+          icon: Icons.add,
+          hint: 'Add one ticket',
+          onPressed: () => _updateEntry(TicketEntry.of(context)),
+        );
       case TicketEntryButtonKind.decrement:
-        return Icons.remove;
+        return ActionViewModel(
+          icon: Icons.remove,
+          hint: 'Remove one ticket',
+          onPressed: () => _updateEntry(TicketEntry.of(context)),
+        );
       case TicketEntryButtonKind.reset:
-        return Icons.cancel;
-      default:
-        return null;
-    }
-  }
-
-  Color get color {
-    switch (kind) {
-      case TicketEntryButtonKind.increment:
-        return Colors.green;
-      case TicketEntryButtonKind.decrement:
-        return Colors.red;
-      case TicketEntryButtonKind.reset:
-        return Colors.grey;
+        return ActionViewModel(
+          icon: Icons.cancel,
+          hint: 'Clear tickets',
+          onPressed: () => _updateEntry(TicketEntry.of(context)),
+        );
       default:
         return null;
     }
@@ -55,23 +56,8 @@ class TicketEntryButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TicketEntry entry = TicketEntry.of(context);
-    return Padding(
-      padding: EdgeInsets.only(left: 1, right: 1),
-      child: Material(
-        color: this.color,
-        borderRadius: BorderRadius.circular(4.0),
-        child: InkWell(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
-            child: Icon(
-              icon,
-              color: Color.lerp(color, Colors.black, 0.5),
-            ),
-          ),
-          onTap: () => _updateEntry(entry),
-        ),
-      ),
+    return ActionButton(
+      viewModel: _buildActionViewModel(context),
     );
   }
 }
