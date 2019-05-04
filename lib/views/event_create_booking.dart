@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/widgets/application_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -36,28 +37,25 @@ class _EventCreateBookingViewState extends State<EventCreateBookingView> {
 
   @override
   Widget build(BuildContext context) {
-    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
-
     return ScopedModel<TicketEntries>(
       model: _booking,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('New Ticket Booking'),
+      child: ApplicationScaffold(
+        viewModel: ApplicationScaffoldViewModel(
+          title: 'New Ticket Booking',
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              TicketEntriesPriceWidget(),
+              TicketEntriesWidget(),
+            ],
+          ),
+          mainAction: MainActionViewModel(
+            icon: Icons.check,
+            title: 'Create booking',
+            hint: 'Apply the current ticket counts to a new booking',
+            onPressed: () => commit(context), 
+          ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            TicketEntriesPriceWidget(),
-            TicketEntriesWidget(),
-          ],
-        ),
-        floatingActionButton: (showFab)
-            ? FloatingActionButton(
-                onPressed: () => commit(context),
-                tooltip: 'Book tickets',
-                child: Icon(Icons.check),
-              )
-            : null,
       ),
     );
   }
