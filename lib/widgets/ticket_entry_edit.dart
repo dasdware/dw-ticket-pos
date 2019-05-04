@@ -5,7 +5,6 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:dw_ticket_pos/model/ticket_entry.dart';
 import 'package:dw_ticket_pos/widgets/ticket_entry_button.dart';
-import 'package:dw_ticket_pos/widgets/ticket_entry_price.dart';
 
 class TicketEntryEditListTile extends StatelessWidget {
   final TicketEntry _entry;

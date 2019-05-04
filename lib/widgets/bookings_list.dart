@@ -1,6 +1,5 @@
 import 'package:dw_ticket_pos/model/booking.dart';
 import 'package:dw_ticket_pos/widgets/action_button.dart';
-import 'package:dw_ticket_pos/widgets/application_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 

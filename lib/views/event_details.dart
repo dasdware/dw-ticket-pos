@@ -173,67 +173,6 @@ class _EventDetailsViewState extends State<EventDetailsView> {
             },
           )),
     );
-
-    /*  final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.viewTitle),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InputField(
-                labelText: 'Event title',
-                controller: titleController,
-              ),
-              ButtonedText(
-                label: 'Date',
-                value: formatInputDate(dateTime),
-                icon: Icons.today,
-                onPressed: () => _selectDate(context),
-              ),
-              ButtonedText(
-                label: 'Time',
-                value: formatInputTime(dateTime),
-                icon: Icons.watch_later,
-                onPressed: () => _selectTime(context),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text('Available Tickets'),
-              ),
-            ]..addAll(
-                ticketSelection.map(
-                  (selection) =>
-                      new TicketSelectionListTile(selection: selection),
-                ),
-              ),
-          ),
-        ),
-      ),
-      floatingActionButton: (showFab)
-          ? FloatingActionButton(
-              child: Icon(Icons.check),
-              onPressed: () {
-                if (widget.onCommit == null ||
-                    widget.onCommit(
-                        titleController.text,
-                        dateTime,
-                        ticketSelection
-                            .where((selection) => selection.selected)
-                            .map((selection) => selection.ticket)
-                            .toList())) {
-                  Navigator.of(context).pop();
-                }
-              },
-            )
-          : null,
-    );*/
   }
 }
 
@@ -294,45 +233,6 @@ class ButtonedText extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class ButtonedInputField extends StatelessWidget {
-  const ButtonedInputField({
-    Key key,
-    @required this.controller,
-    @required this.labelText,
-    @required this.onButtonPressed,
-    this.buttonIcon = Icons.edit,
-  }) : super(key: key);
-
-  final TextEditingController controller;
-  final String labelText;
-  final IconData buttonIcon;
-  final Function onButtonPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Flexible(
-          child: InputField(
-            labelText: labelText,
-            controller: controller,
-            padding: EdgeInsets.only(left: 16.0),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 8.0, top: 8.0),
-          child: IconButton(
-            icon: Icon(buttonIcon),
-            onPressed: onButtonPressed,
-          ),
-        ),
-      ],
     );
   }
 }
