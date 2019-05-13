@@ -1,3 +1,5 @@
+import 'package:dw_ticket_pos/model/event.dart';
+import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
 
 class JSONTicket {
@@ -8,7 +10,8 @@ class JSONTicket {
 
   JSONTicket({this.name, this.color, this.price, this.virtualPrice});
 
-  Ticket toTicket() => Ticket(name, price, virtualPrice);
+  Ticket toTicket(Storage storage) => Ticket(storage, name, price, virtualPrice);
+  Ticket toEventTicket(Event event) => Ticket.forEvent(event, name, price, virtualPrice);
 
   JSONTicket.fromTicket(Ticket ticket) :
     name = ticket.title,

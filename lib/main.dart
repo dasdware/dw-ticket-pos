@@ -1,3 +1,5 @@
+import 'package:dw_ticket_pos/backends/jsonfile_storage_backend.dart';
+import 'package:dw_ticket_pos/backends/storage_backend.dart';
 import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:dw_ticket_pos/views/storage_home.dart';
 import 'package:dw_ticket_pos/widgets/application_theme.dart';
@@ -8,27 +10,27 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:dw_ticket_pos/utils/format.dart';
 
-Future<Storage> loadStorage() {
-  return Storage.load();
+StorageBackend createStorageBackend() {
+  return JsonfileStorageBackend();
 }
 
 Future<Null> main() async {
   await intl_local_date_data.initializeDateFormatting();
   initFormats();
-  runApp(DWTicketPosApp(loadStorage()));
+  runApp(DWTicketPosApp(createStorageBackend()));
 }
 
 class DWTicketPosApp extends StatelessWidget {
-  final Future<Storage> storageLoader;
+  final StorageBackend backend;
 
-  DWTicketPosApp(this.storageLoader);
+  DWTicketPosApp(this.backend);
 
   @override
   Widget build(BuildContext context) {
     return ApplicationTheme(
       primaryColor: Color.lerp(Colors.deepPurple, Colors.black, 0.4),
       backgroundColor: Colors.white,
-      child: new Application(storageLoader: storageLoader),
+      child: new Application(storageLoader: backend.load()),
     );
   }
 }

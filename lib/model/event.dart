@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -6,13 +7,14 @@ import 'package:dw_ticket_pos/model/summary.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
 
 class Event extends Model {
+  final Storage storage;
   final String name;
   final DateTime dateTime;
-  final List<Ticket> availableTickets;
+  List<Ticket> availableTickets;
   final List<Booking> entries = [];
   Summary _summary;
 
-  Event(this.name, this.dateTime, this.availableTickets) {
+  Event(this.storage, this.name, this.dateTime) {
     _summary = Summary(this);
   }
 
@@ -25,11 +27,13 @@ class Event extends Model {
   void commit(Booking entry) {
     entries.add(entry);
     notifyListeners();
+    storage.backend.bookingAdded(entry);
   }
 
   void delete(Booking booking) {
     entries.remove(booking);
     notifyListeners();
+    storage.backend.bookingRemoved(booking);
   }
 
   static Event of(BuildContext context) =>

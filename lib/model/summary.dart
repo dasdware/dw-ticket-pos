@@ -6,17 +6,20 @@ class Summary extends TicketEntries {
   final Event _journal;
   List<SummaryTicket> _entries;
 
-  Summary(this._journal) {
-    _entries = _journal.availableTickets
+  Summary(this._journal);
+
+  List<SummaryTicket> get entries {
+    if (_entries == null) {
+      _entries = _journal.availableTickets
         .map((ticket) => SummaryTicket(_journal, ticket))
         .toList();
+    }
+    return _entries;
   }
-
-  List<SummaryTicket> get entries => _entries;
 
   int get count {
     int sum = 0;
-    for (SummaryTicket entry in _entries) {
+    for (SummaryTicket entry in entries) {
       sum += entry.count;
     }
     return sum;
@@ -24,7 +27,7 @@ class Summary extends TicketEntries {
 
   int get price {
     int sum = 0;
-    for (SummaryTicket entry in _entries) {
+    for (SummaryTicket entry in entries) {
       sum += entry.price;
     }
     return sum;
@@ -32,7 +35,7 @@ class Summary extends TicketEntries {
 
   int get virtualPrice {
     int sum = 0;
-    for (SummaryTicket entry in _entries) {
+    for (SummaryTicket entry in entries) {
       sum += entry.virtualPrice;
     }
     return sum;

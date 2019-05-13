@@ -27,13 +27,13 @@ class EventHomeView extends StatelessWidget {
           viewModel: ApplicationScaffoldViewModel(
             title: event.name,
             subtitle: formatDate(event.dateTime),
-            actions: [
+         /*   actions: [
               ActionViewModel(
                 icon: Icons.save,
                 hint: 'Save the current state in the storage',
                 onPressed: () => storage.save(),
               ),
-            ],
+            ],*/
             tabs: TabsViewModel(initialTabIndex: 0, tabs: [
               TabViewModel(
                 icon: Icons.assessment,

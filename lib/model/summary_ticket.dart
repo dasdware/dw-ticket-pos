@@ -16,7 +16,7 @@ class SummaryTicket extends TicketEntry {
   void _doForOurTickets(Function callback) {
     for (Booking booking in _journal.entries) {
       for (BookingTicket bookingTicket in booking.entries) {
-        if (bookingTicket.ticket ==_ticket) {
+        if (bookingTicket.ticket == _ticket) {
           callback(bookingTicket);
           break;
         }

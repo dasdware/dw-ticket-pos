@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dw_ticket_pos/backends/storage_backend.dart';
 import 'package:dw_ticket_pos/model/mock_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,52 +12,35 @@ import 'package:dw_ticket_pos/model/event.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
 
 class Storage extends Model {
+  final StorageBackend backend;
+
   List<Ticket> tickets = [];
   List<Event> events = [];
 
+  Storage(this.backend);
+
   Event createEvent(String name, DateTime dateTime, List<Ticket> tickets) {
-    Event event =
-        Event(name, dateTime, tickets.map((ticket) => ticket.clone()).toList());
+    Event event = Event(this, name, dateTime);
+    event.availableTickets =
+        tickets.map((ticket) => ticket.cloneWithEvent(event)).toList();
     events.add(event);
     notifyListeners();
+    backend.eventAdded(event);
     return event;
   }
 
   Ticket addTicket(String title, int price, int virtualPrice) {
-    final Ticket ticket = Ticket(title, price, virtualPrice);
+    final Ticket ticket = Ticket(this, title, price, virtualPrice);
     tickets.add(ticket);
     notifyListeners();
+    backend.ticketAdded(ticket);
     return ticket;
   }
 
   void deleteTicket(Ticket ticket) {
     tickets.remove(ticket);
     notifyListeners();
-  }
-
-  void save() async {
-    final json = JSONStorage.fromStorage(this);
-    final jsonString = jsonEncode(json);
-    print(jsonString);
-
-    File output = await _getStorageFile();
-    print(output.path);
-    await output.writeAsString(jsonString);
-  }
-
-  static Future<File> _getStorageFile() async {
-    final path = await getApplicationDocumentsDirectory();
-    return File('${path.path}/storage.json');
-  }
-
-  static Future<Storage> load() async {
-    final File input = await _getStorageFile();
-    if (await input.exists()) {
-      final jsonString = await input.readAsString();
-      return JSONStorage.fromJson(jsonDecode(jsonString)).toStorage();
-    } else {
-      return MockStorage();
-    }
+    backend.ticketRemoved(ticket);
   }
 
   static Storage of(BuildContext context) => ScopedModel.of<Storage>(context);

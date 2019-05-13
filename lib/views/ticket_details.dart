@@ -14,12 +14,11 @@ void editTicket(BuildContext context, Ticket ticket) {
           price: ticket.price,
           virtualPrice: ticket.virtualPrice,
           commitButtonTitle: 'Apply changes',
-          commitButtonHint: 'Apply the changes to the currently selected ticket',
+          commitButtonHint:
+              'Apply the changes to the currently selected ticket',
           onCommit: (String title, int price, bool hasVirtualPrice,
               int virtualPrice) {
-            ticket.title = title;
-            ticket.price = price;
-            ticket.virtualPrice = hasVirtualPrice ? virtualPrice : -1;
+            ticket.update(title, price, hasVirtualPrice ? virtualPrice : -1);
             return true;
           }),
     ),

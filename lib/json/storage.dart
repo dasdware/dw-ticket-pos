@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/backends/storage_backend.dart';
 import 'package:dw_ticket_pos/json/event.dart';
 import 'package:dw_ticket_pos/json/ticket.dart';
 import 'package:dw_ticket_pos/model/storage.dart';
@@ -27,13 +28,13 @@ class JSONStorage {
     }
   }
 
-  Storage toStorage() {
-    Storage storage = Storage();
+  Storage toStorage(StorageBackend backend) {
+    Storage storage = Storage(backend);
     for (JSONTicket ticket in tickets) {
-      storage.tickets.add(ticket.toTicket());
+      storage.tickets.add(ticket.toTicket(storage));
     }
     for (JSONEvent event in events) {
-      storage.events.add(event.toEvent());
+      storage.events.add(event.toEvent(storage));
     }
     return storage;
   }
