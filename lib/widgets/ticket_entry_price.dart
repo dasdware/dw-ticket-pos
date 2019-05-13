@@ -22,7 +22,10 @@ class TicketEntryPriceWidget extends StatelessWidget {
               style: TextStyle(fontSize: 13.0),
             ));
           }
-          return Column(children: prices);
+          return Column(
+            children: prices,
+            mainAxisAlignment: MainAxisAlignment.center,
+          );
         }));
   }
 }
