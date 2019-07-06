@@ -1,12 +1,10 @@
 import 'package:dw_ticket_pos/model/event.dart';
+import 'package:dw_ticket_pos/model/storage.dart';
+import 'package:dw_ticket_pos/utils/localization.dart';
+import 'package:dw_ticket_pos/views/event_home.dart';
+import 'package:dw_ticket_pos/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
-import 'package:dw_ticket_pos/model/storage.dart';
-import 'package:dw_ticket_pos/utils/format.dart';
-import 'package:dw_ticket_pos/views/event_home.dart';
-
-import 'action_button.dart';
 
 class EventListWidget extends StatelessWidget {
   const EventListWidget({
@@ -21,7 +19,7 @@ class EventListWidget extends StatelessWidget {
             .map(
               (event) => ListTile(
                     title: Text(event.name),
-                    subtitle: Text(formatDate(event.dateTime)),
+                    subtitle: Text(MaterialLocalizations.of(context).formatFullDate(event.dateTime)),
                     trailing: DeleteEventButton(storage: storage, event: event),
                     onTap: () {
                       Navigator.push(
@@ -50,19 +48,19 @@ class DeleteEventButton extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete event'),
+          title: Text(AppLocalizations.of(context).deleteEvent),
           content:
-              Text('Are you sure that you want to delete the selected event?'),
+              Text(AppLocalizations.of(context).deleteEventMessage),
           actions: [
             FlatButton(
-              child: Text('YES'),
+              child: Text(AppLocalizations.of(context).dialogYes),
               onPressed: () {
                 storage.deleteEvent(event);
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('NO'),
+              child: Text(AppLocalizations.of(context).dialogNo),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -78,7 +76,7 @@ class DeleteEventButton extends StatelessWidget {
     return ActionButton(
       viewModel: ActionViewModel(
         icon: Icons.delete,
-        hint: 'Delete this event',
+        hint: AppLocalizations.of(context).deleteEventHint,
         onPressed: () => askDeleteEvent(context),
       ),
     );

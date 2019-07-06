@@ -1,4 +1,5 @@
 import 'package:dw_ticket_pos/model/storage.dart';
+import 'package:dw_ticket_pos/utils/localization.dart';
 import 'package:dw_ticket_pos/views/event_details.dart';
 import 'package:dw_ticket_pos/views/ticket_details.dart';
 import 'package:dw_ticket_pos/widgets/application_scaffold.dart';
@@ -11,30 +12,31 @@ import 'package:dw_ticket_pos/widgets/ticket_list.dart';
 class StorageHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return ApplicationScaffold(
       viewModel: ApplicationScaffoldViewModel(
-          title: 'DW Ticket Point of Sale',
+          title: localizations.title,
           tabs: TabsViewModel(
             tabs: [
               TabViewModel(
                 icon: Icons.event,
-                hint: 'Events',
+                hint: localizations.events,
                 body: EventListWidget(),
                 mainAction: MainActionViewModel(
                   icon: Icons.add_circle,
-                  title: 'New Event',
-                  hint: 'Create a new event in the current storage',
+                  title: localizations.newEvent,
+                  hint: localizations.newEventHint,
                   onPressed: () => addEvent(context, Storage.of(context)),
                 ),
               ),
               TabViewModel(
                 icon: Icons.note,
-                hint: 'Tickets',
+                hint: localizations.tickets,
                 body: TicketListWidget(),
                 mainAction: MainActionViewModel(
                   icon: Icons.add_circle,
-                  title: 'New Ticket',
-                  hint: 'Create a new ticket in the current storage',
+                  title: localizations.newTicket,
+                  hint: localizations.newTicketHint,
                   onPressed: () => addTicket(context, Storage.of(context)),
                 ),
               )

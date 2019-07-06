@@ -1,5 +1,6 @@
 import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
+import 'package:dw_ticket_pos/utils/localization.dart';
 import 'package:dw_ticket_pos/widgets/application_scaffold.dart';
 import 'package:dw_ticket_pos/widgets/main_action_button.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +10,12 @@ void editTicket(BuildContext context, Ticket ticket) {
     context,
     MaterialPageRoute(
       builder: (context) => TicketDetailsView(
-          viewTitle: 'Edit Ticket',
+          viewTitle: AppLocalizations.of(context).editTicket,
           ticketTitle: ticket.title,
           price: ticket.price,
           virtualPrice: ticket.virtualPrice,
-          commitButtonTitle: 'Apply changes',
-          commitButtonHint:
-              'Apply the changes to the currently selected ticket',
+          commitButtonTitle: AppLocalizations.of(context).editTicketCommit,
+          commitButtonHint: AppLocalizations.of(context).editTicketCommitHint,
           onCommit: (String title, int price, bool hasVirtualPrice,
               int virtualPrice) {
             ticket.update(title, price, hasVirtualPrice ? virtualPrice : -1);
@@ -30,12 +30,12 @@ void addTicket(BuildContext context, Storage storage) {
     context,
     MaterialPageRoute(
       builder: (context) => TicketDetailsView(
-          viewTitle: 'Create new Ticket',
+          viewTitle: AppLocalizations.of(context).createTicket,
           ticketTitle: '',
           price: 1000,
           virtualPrice: -1,
-          commitButtonTitle: 'Create new Ticket',
-          commitButtonHint: 'Create ticket with the given properties',
+          commitButtonTitle: AppLocalizations.of(context).createTicketCommit,
+          commitButtonHint: AppLocalizations.of(context).createTicketCommitHint,
           onCommit: (String title, int price, bool hasVirtualPrice,
               int virtualPrice) {
             storage.addTicket(
@@ -100,15 +100,15 @@ class _TicketDetailsViewState extends State<TicketDetailsView> {
           child: Column(
             children: [
               InputField(
-                labelText: 'Name',
+                labelText: AppLocalizations.of(context).ticketTitle,
                 controller: titleController,
               ),
               InputField(
-                labelText: 'Price',
+                labelText: AppLocalizations.of(context).ticketPrice,
                 controller: priceController,
               ),
               CheckboxListTile(
-                title: Text('Has virtual price'),
+                title: Text(AppLocalizations.of(context).ticketHasVirtualPrice),
                 value: hasVirtualPrice,
                 onChanged: (bool value) {
                   setState(() {
@@ -117,7 +117,7 @@ class _TicketDetailsViewState extends State<TicketDetailsView> {
                 },
               ),
               InputField(
-                labelText: 'Virtual price',
+                labelText: AppLocalizations.of(context).ticketVirtualPrice,
                 enabled: hasVirtualPrice,
                 controller: virtualPriceController,
               ),

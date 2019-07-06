@@ -18,7 +18,7 @@ class TicketListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(ticket.title),
-      subtitle: Text(formatTicketPrice(ticket)),
+      subtitle: Text(formatTicketPrice(context, ticket)),
       leading: leading,
       trailing: trailing,
     );

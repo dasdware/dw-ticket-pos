@@ -1,12 +1,11 @@
+import 'package:dw_ticket_pos/model/storage.dart';
+import 'package:dw_ticket_pos/model/ticket.dart';
+import 'package:dw_ticket_pos/utils/format.dart';
+import 'package:dw_ticket_pos/utils/localization.dart';
 import 'package:dw_ticket_pos/views/ticket_details.dart';
 import 'package:dw_ticket_pos/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
-import 'package:dw_ticket_pos/model/storage.dart';
-import 'package:dw_ticket_pos/model/ticket.dart';
-
-import 'package:dw_ticket_pos/utils/format.dart';
 
 class TicketListWidget extends StatelessWidget {
   const TicketListWidget({
@@ -21,7 +20,7 @@ class TicketListWidget extends StatelessWidget {
                 .map(
                   (ticket) => ListTile(
                         title: Text(ticket.title),
-                        subtitle: Text(formatTicketPrice(ticket)),
+                        subtitle: Text(formatTicketPrice(context, ticket)),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -47,7 +46,7 @@ class EditTicketButton extends StatelessWidget {
     return ActionButton(
       viewModel: ActionViewModel(
         icon: Icons.edit,
-        hint: 'Edit the details of this ticket',
+        hint: AppLocalizations.of(context).editTicketHint,
         onPressed: () => editTicket(context, ticket),
       ),
     );
@@ -66,19 +65,19 @@ class DeleteTicketButton extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete ticket'),
+          title: Text(AppLocalizations.of(context).deleteTicket),
           content:
-              Text('Are you sure that you want to delete the selected ticket?'),
+              Text(AppLocalizations.of(context).deleteTicketMessage),
           actions: [
             FlatButton(
-              child: Text('YES'),
+              child: Text(AppLocalizations.of(context).dialogYes),
               onPressed: () {
                 storage.deleteTicket(ticket);
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('NO'),
+              child: Text(AppLocalizations.of(context).dialogNo),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -94,7 +93,7 @@ class DeleteTicketButton extends StatelessWidget {
     return ActionButton(
       viewModel: ActionViewModel(
         icon: Icons.delete,
-        hint: 'Delete this ticket',
+        hint: AppLocalizations.of(context).deleteTicketHint,
         onPressed: () => askDeleteTicket(context),
       ),
     );

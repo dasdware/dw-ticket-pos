@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/utils/localization.dart';
 import 'package:dw_ticket_pos/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 
@@ -17,19 +18,19 @@ class TicketEntryButtonWidget extends StatelessWidget {
       case TicketEntryButtonKind.increment:
         return ActionViewModel(
           icon: Icons.add,
-          hint: 'Add one ticket',
+          hint: AppLocalizations.of(context).createBookingAddOneTicket,
           onPressed: () => _updateEntry(TicketEntry.of(context)),
         );
       case TicketEntryButtonKind.decrement:
         return ActionViewModel(
           icon: Icons.remove,
-          hint: 'Remove one ticket',
+          hint: AppLocalizations.of(context).createBookingRemoveOneTicket,
           onPressed: () => _updateEntry(TicketEntry.of(context)),
         );
       case TicketEntryButtonKind.reset:
         return ActionViewModel(
           icon: Icons.cancel,
-          hint: 'Clear tickets',
+          hint: AppLocalizations.of(context).createBookingClearTickets,
           onPressed: () => _updateEntry(TicketEntry.of(context)),
         );
       default:

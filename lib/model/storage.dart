@@ -1,15 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:dw_ticket_pos/backends/storage_backend.dart';
-import 'package:dw_ticket_pos/model/mock_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:scoped_model/scoped_model.dart';
-
-import 'package:dw_ticket_pos/json/storage.dart';
 import 'package:dw_ticket_pos/model/event.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
+import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class Storage extends Model {
   final StorageBackend backend;

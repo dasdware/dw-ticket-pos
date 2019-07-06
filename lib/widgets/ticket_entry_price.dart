@@ -13,12 +13,12 @@ class TicketEntryPriceWidget extends StatelessWidget {
         child: ScopedModelDescendant<TicketEntry>(builder: (context, _, model) {
           List<Widget> prices = [];
           prices.add(Text(
-            formatPrice(model.price),
+            formatPrice(context, model.price),
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ));
           if (model.hasVirtualPrice) {
             prices.add(Text(
-              '(${formatPrice(model.virtualPrice)})',
+              '(${formatPrice(context, model.virtualPrice)})',
               style: TextStyle(fontSize: 13.0),
             ));
           }

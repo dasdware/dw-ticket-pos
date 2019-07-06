@@ -1,3 +1,4 @@
+import 'package:dw_ticket_pos/utils/localization.dart';
 import 'package:dw_ticket_pos/widgets/application_scaffold.dart';
 import 'package:dw_ticket_pos/widgets/main_action_button.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _EventCreateBookingViewState extends State<EventCreateBookingView> {
       model: _booking,
       child: ApplicationScaffold(
         viewModel: ApplicationScaffoldViewModel(
-          title: 'New Ticket Booking',
+          title: AppLocalizations.of(context).createBooking,
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -52,8 +53,8 @@ class _EventCreateBookingViewState extends State<EventCreateBookingView> {
           ),
           mainAction: MainActionViewModel(
             icon: Icons.check,
-            title: 'Create booking',
-            hint: 'Apply the current ticket counts to a new booking',
+            title: AppLocalizations.of(context).createBookingCommit,
+            hint: AppLocalizations.of(context).createBookingCommitHint,
             onPressed: () => commit(context), 
           ),
         ),

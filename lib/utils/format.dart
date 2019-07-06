@@ -1,51 +1,35 @@
 import 'package:dw_ticket_pos/model/ticket.dart';
-import 'package:intl/intl.dart';
+import 'package:dw_ticket_pos/utils/localization.dart';
+import 'package:flutter/material.dart';
 
 import 'package:dw_ticket_pos/model/ticket_entries.dart';
 
-String formatPrice(int price) {
+String formatPrice(BuildContext context, int price) {
   return (price ~/ 100).toString() +
       ',' +
       (price % 100).toString().padLeft(2, '0') +
       '€';
 }
 
-String formatTicketPrice(Ticket ticket) {
-  String label = formatPrice(ticket.price);
+String formatTicketPrice(BuildContext context, Ticket ticket) {
+  String label = formatPrice(context, ticket.price);
   if (ticket.hasVirtualPrice)
-    label = label + ' (' + formatPrice(ticket.virtualPrice) + ')';
+    label = label + ' (' + formatPrice(context, ticket.virtualPrice) + ')';
   return label;
 }
 
-DateFormat _dateFormat;
-DateFormat _dateTimeFormat;
-DateFormat _inputDateFormat;
-DateFormat _inputTimeFormat;
-
-void initFormats() {
-  _dateFormat = DateFormat.yMMMd('de_DE');
-  _dateTimeFormat = DateFormat('dd. MMM y HH:mm', 'de_DE');
-  _inputDateFormat = DateFormat('dd.MM.yyyy');
-  _inputTimeFormat = DateFormat('HH:mm');
+String formatDate(BuildContext context, DateTime date) {
+  var localizations = MaterialLocalizations.of(context);
+  return localizations.formatMediumDate(date);
 }
 
-String formatDate(DateTime date) {
-  return _dateFormat.format(date);
+String formatDateTime(BuildContext context, DateTime date) {
+  var localizations = MaterialLocalizations.of(context);
+  return localizations.formatMediumDate(date) + ' ' + 
+    localizations.formatTimeOfDay(TimeOfDay.fromDateTime(date));
 }
 
-String formatDateTime(DateTime date) {
-  return _dateTimeFormat.format(date);
-}
-
-String formatInputDate(DateTime date) {
-  return _inputDateFormat.format(date);
-}
-
-String formatInputTime(DateTime date) {
-  return _inputTimeFormat.format(date.toLocal());
-}
-
-String formatTicketEntries(TicketEntries ticketEntries) {
+String formatTicketEntries(BuildContext context, TicketEntries ticketEntries) {
   String value = ticketEntries.entries.fold('', (combined, ticketEntry) {
     if (ticketEntry.count > 0) {
       if (combined.isNotEmpty) {
@@ -58,7 +42,7 @@ String formatTicketEntries(TicketEntries ticketEntries) {
   });
 
   if (value.isEmpty) {
-    return 'Keine Tickets verkauft';
+    return AppLocalizations.of(context).noTicketsSold;
   } else {
     return value;
   }

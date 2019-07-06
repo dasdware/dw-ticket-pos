@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
-import 'package:dw_ticket_pos/utils/format.dart';
+import 'package:dw_ticket_pos/utils/localization.dart';
 import 'package:dw_ticket_pos/widgets/application_scaffold.dart';
 import 'package:dw_ticket_pos/widgets/main_action_button.dart';
 import 'package:dw_ticket_pos/widgets/ticket_list_tiles.dart';
@@ -14,10 +14,10 @@ void addEvent(BuildContext context, Storage storage) {
     MaterialPageRoute(
       builder: (context) => EventDetailsView(
           storage: storage,
-          viewTitle: 'Create new Event',
+          viewTitle: AppLocalizations.of(context).createEvent,
           eventTitle: '',
           dateTime: DateTime.now(),
-          mainActionTitle: 'Create new Event',
+          mainActionTitle: AppLocalizations.of(context).createEvent,
           onCommit: (String title, DateTime dateTime, List<Ticket> tickets) {
             storage.createEvent(title, dateTime, tickets);
             return true;
@@ -126,25 +126,25 @@ class _EventDetailsViewState extends State<EventDetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   InputField(
-                    labelText: 'Event title',
+                    labelText: AppLocalizations.of(context).eventTitle,
                     controller: titleController,
                   ),
                   ButtonedText(
-                    label: 'Date',
-                    value: formatInputDate(dateTime),
+                    label: AppLocalizations.of(context).eventDate,
+                    value: MaterialLocalizations.of(context).formatFullDate(dateTime),
                     icon: Icons.today,
                     onPressed: () => _selectDate(context),
                   ),
                   ButtonedText(
-                    label: 'Time',
-                    value: formatInputTime(dateTime),
+                    label: AppLocalizations.of(context).eventTime,
+                    value: MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(dateTime)),
                     icon: Icons.watch_later,
                     onPressed: () => _selectTime(context),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16.0, vertical: 8.0),
-                    child: Text('Available Tickets'),
+                    child: Text(AppLocalizations.of(context).eventAvailableTickets),
                   ),
                 ]..addAll(
                     ticketSelection.map(

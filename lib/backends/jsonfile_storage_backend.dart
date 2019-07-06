@@ -5,7 +5,6 @@ import 'package:dw_ticket_pos/backends/storage_backend.dart';
 import 'package:dw_ticket_pos/json/storage.dart';
 import 'package:dw_ticket_pos/model/booking.dart';
 import 'package:dw_ticket_pos/model/event.dart';
-import 'package:dw_ticket_pos/model/mock_storage.dart';
 import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:dw_ticket_pos/model/ticket.dart';
 import 'package:path_provider/path_provider.dart';
@@ -69,7 +68,7 @@ class JsonfileStorageBackend implements StorageBackend {
       final jsonString = await input.readAsString();
       _storage = JSONStorage.fromJson(jsonDecode(jsonString)).toStorage(this);
     } else {
-      _storage = MockStorage(this);
+      _storage = Storage(this);
     }
     return _storage;
   }
