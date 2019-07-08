@@ -4,11 +4,13 @@ import 'package:dw_ticket_pos/backends/jsonfile_storage_backend.dart';
 import 'package:dw_ticket_pos/backends/storage_backend.dart';
 import 'package:dw_ticket_pos/model/storage.dart';
 import 'package:dw_ticket_pos/utils/localization.dart';
+import 'package:dw_ticket_pos/utils/settings.dart';
 import 'package:dw_ticket_pos/views/storage_home.dart';
 import 'package:dw_ticket_pos/widgets/application_theme.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 StorageBackend createStorageBackend() {
@@ -45,32 +47,34 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = ApplicationTheme.of(context);
-    return MaterialApp(
-      title: 'DW Ticket Point of Sale',
-      theme: theme.themeData,
-      localizationsDelegates: [
-        const AppLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en'),
-        const Locale('de'),
-      ],
-      locale: Locale('en'),
-      home: FutureBuilder<Storage>(
-        future: this.storageLoader,
-        builder: (context, storage) {
-          if (!storage.hasData) {
-            return Center(child: CircularProgressIndicator());
-          } else {
-            return ScopedModel<Storage>(
-              model: storage.data,
-              child: StorageHomeView(),
-            );
-          }
-        },
-      ),
+
+    return AppSettingsProvider(
+        child: Consumer<AppSettings>(
+          builder: (context, settings, _) => MaterialApp(
+            title: 'DW Ticket Point of Sale',
+            theme: theme.themeData,
+            localizationsDelegates: [
+              const AppLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLanguages.map((language) => language.locale),
+            locale: settings.language.locale,
+            home: FutureBuilder<Storage>(
+              future: this.storageLoader,
+              builder: (context, storage) {
+                if (!storage.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return ScopedModel<Storage>(
+                    model: storage.data,
+                    child: StorageHomeView(),
+                  );
+                }
+              },
+            ),
+          ),
+        ),
     );
   }
 }

@@ -1,7 +1,10 @@
+import 'package:dw_ticket_pos/utils/localization.dart';
+import 'package:dw_ticket_pos/utils/settings.dart';
 import 'package:dw_ticket_pos/widgets/action_button.dart';
 import 'package:dw_ticket_pos/widgets/application_theme.dart';
 import 'package:dw_ticket_pos/widgets/main_action_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TabViewModel {
   final String hint;
@@ -44,6 +47,13 @@ class ApplicationScaffoldViewModel {
     this.body,
     this.mainAction,
   });
+}
+
+class SettingsActionModel {
+  final String Function(BuildContext context) captionBuilder;
+  final VoidCallback onSelected;
+
+  SettingsActionModel({this.captionBuilder, this.onSelected});
 }
 
 class ApplicationScaffold extends StatefulWidget {
@@ -120,14 +130,67 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
     }
   }
 
-  List<Widget> _buildActions(BuildContext context) {
-    if (viewModel.actions == null || viewModel.actions.length == 0) {
-      return null;
-    }
+  List<SettingsActionModel> _buildSettingsActions() {
+    return [
+      SettingsActionModel(
+        captionBuilder: (BuildContext context) =>
+            AppLocalizations.of(context).settingsLanguage,
+        onSelected: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title:
+                      Text(AppLocalizations.of(context).settingsLanguageSelect),
+                  content: ListView(
+                    children: AppLocalizations.supportedLanguages
+                        .map((language) => RadioListTile<AppLanguage>(
+                              value: language,
+                              groupValue:
+                                  Provider.of<AppSettings>(context).language,
+                              title: Text(language.name),
+                              onChanged: (language) {
+                                Provider.of<AppSettings>(context).language =
+                                    language;
+                                Navigator.of(context).pop();
+                              },
+                            ))
+                        .toList(),
+                  ),
+                );
+              });
+        },
+      )
+    ];
+  }
 
-    return viewModel.actions
-        .map((action) => ActionButton(viewModel: action))
-        .toList();
+  Widget _buildSettingsPopupMenuButton(BuildContext context) {
+    return PopupMenuButton<SettingsActionModel>(
+      icon: Icon(Icons.settings,
+          color: ApplicationTheme.of(context).primaryColor),
+      onSelected: (SettingsActionModel result) {
+        result.onSelected();
+      },
+      itemBuilder: (BuildContext context) => _buildSettingsActions()
+          .map(
+            (action) => PopupMenuItem<SettingsActionModel>(
+                  value: action,
+                  child: Text(action.captionBuilder(context)),
+                ),
+          )
+          .toList(),
+    );
+  }
+
+  List<Widget> _buildActions(BuildContext context) {
+    List<Widget> actions = (viewModel.actions != null)
+        ? viewModel.actions
+            .map((action) => ActionButton(viewModel: action))
+            .toList()
+        : [];
+    actions.add(_buildSettingsPopupMenuButton(context));
+
+    return actions;
   }
 
   Widget _buildAppBarBottom(BuildContext context) {

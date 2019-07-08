@@ -2,6 +2,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+class AppLanguage {
+  final String name;
+  final String languageCode;
+
+  AppLanguage(this.name, this.languageCode);
+
+  Locale get locale => Locale(languageCode);
+}
+
 class AppLocalizations {
 
   final Locale locale;
@@ -12,6 +21,12 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  static final supportedLanguages = [
+    AppLanguage('English', 'en'), AppLanguage('Deutsch', 'de')
+  ];
+
+  static AppLanguage get defaultLanguage => supportedLanguages[0];
+
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // common
@@ -19,6 +34,9 @@ class AppLocalizations {
       'dialogYes': 'YES',
       'dialogNo': 'NO',
       'noTicketsSold': 'No Tickets sold',
+      'settings': 'Settings',
+      'settingsLanguage': 'Language',
+      'settingsLanguageSelect': 'Select language',
 
       // event list
       'events': 'Events',
@@ -78,6 +96,9 @@ class AppLocalizations {
       'dialogYes': 'JA',
       'dialogNo': 'NEIN',
       'noTicketsSold': 'Keine Tickets verkauft',
+      'settings': 'Einstellungen',
+      'settingsLanguage': 'Sprache',
+      'settingsLanguageSelect': 'Sprache auswählen',
 
       // event list
       'events': 'Veranstaltungen',
@@ -148,6 +169,18 @@ class AppLocalizations {
 
   String get noTicketsSold {
     return _localizedValues[locale.languageCode]['noTicketsSold'];
+  }
+
+  String get settings {
+    return _localizedValues[locale.languageCode]['settings'];
+  }
+
+  String get settingsLanguage {
+    return _localizedValues[locale.languageCode]['settingsLanguage'];
+  }
+
+  String get settingsLanguageSelect {
+    return _localizedValues[locale.languageCode]['settingsLanguageSelect'];
   }
 
   // event list
@@ -330,7 +363,8 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
 
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'de'].contains(locale.languageCode);
+    return AppLocalizations.supportedLanguages.map(
+      (language) => language.languageCode).contains(locale.languageCode);
   }
 
   @override
