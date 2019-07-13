@@ -214,9 +214,20 @@ class _ApplicationScaffoldState extends State<ApplicationScaffold>
 
   Widget _buildBody(BuildContext context) {
     if (_haveTabs) {
-      return TabBarView(
-        controller: _tabController,
-        children: viewModel.tabs.tabs.map((tab) => tab.body).toList(),
+      return DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.1), BlendMode.dstATop),
+              image: AssetImage('images/ticket.png'),
+            ),
+          ),
+          child: Opacity(
+            opacity: 1.0,
+            child: TabBarView(
+              controller: _tabController,
+              children: viewModel.tabs.tabs.map((tab) => tab.body).toList(),
+            ),
+          ),
       );
     } else {
       return viewModel.body;
